@@ -1,0 +1,1 @@
+const pipeline = require('../pipeline');

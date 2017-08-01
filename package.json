@@ -1,0 +1,21 @@
+{
+  "name": "jaspe",
+  "version": "1.0.0",
+  "description": "Framework Js to design component with contract model",
+  "main": "japse.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "keywords": [
+    "ContractJS",
+    "Framework",
+    "Js",
+    "validator",
+    "middleware"
+  ],
+  "author": "quentin saieb (DevOups)",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^2.7.0"
+  }
+}
