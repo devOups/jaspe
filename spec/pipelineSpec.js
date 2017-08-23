@@ -85,7 +85,7 @@ describe('Pipeline class - Testing run method', function () {
   })
 })
 describe('Pipeline class - Testing next method', function () {
-  it ('without step', function () {
+  it ('without step and error', function () {
     // given
     let pipeline = new Pipeline();
 
@@ -98,7 +98,55 @@ describe('Pipeline class - Testing next method', function () {
     // then
     expect(pipeline.end).toHaveBeenCalled();
     expect(pipeline.end.calls.count()).toEqual(1);
-    expect(pipeline.end.calls.argsFor(0)).toEqual([undefined, undefined]);
+    expect(pipeline.end.calls.argsFor(0)).toEqual([null, undefined]);
+  })
+  it ('with error and no step', function () {
+    // given
+    let pipeline = new Pipeline()
+
+    // and mock pipeline.end method
+    spyOn(pipeline, 'end')
+
+    // and an error
+    let error =  new Error('test failed')
+
+    // when
+    pipeline.next(error)
+
+    // then
+    expect(pipeline.end).toHaveBeenCalled();
+    expect(pipeline.end.calls.count()).toEqual(1);
+    expect(pipeline.end.calls.argsFor(0)).toEqual([error, undefined]);
+    expect(error.message).toBe('Contract error : test failed');
+  })
+  it ('with error and one step', function () {
+    // given
+    let pipeline = new Pipeline()
+
+    // and mock pipeline.end method
+    spyOn(pipeline, 'end')
+
+    // and an error
+    let error =  new Error('test failed')
+
+    // and : one step and mock step.fn function
+    let step = {
+        name: 'S1',
+        fn: function () {}
+    }
+    spyOn(step, 'fn')
+
+    // and : add step
+    pipeline.steps.push(step);
+
+    // when
+    pipeline.next(error, 1)
+
+    // then
+    expect(pipeline.end).toHaveBeenCalled();
+    expect(pipeline.end.calls.count()).toEqual(1);
+    expect(pipeline.end.calls.argsFor(0)).toEqual([error, 1]);
+    expect(error.message).toBe('Contract error : test failed');
   })
   it ('with one step', function () {
     // given
@@ -121,7 +169,7 @@ describe('Pipeline class - Testing next method', function () {
     expect(step.fn).toHaveBeenCalled();
     expect(step.fn.calls.count()).toEqual(1);
     expect(step.fn.calls.argsFor(0))
-      .toEqual([null, 1, jasmine.any(Function)]);
+      .toEqual([1, jasmine.any(Function)]);
   })
 })
 describe('Pipeline class - Testing end method', function () {

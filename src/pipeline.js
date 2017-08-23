@@ -24,13 +24,15 @@ Pipeline.prototype.run = function (param, callback) {
 }
 
 Pipeline.prototype.next = function (err, param) {
-  if (this.currentStep >= this.steps.length) {
+  if (err) {
+    err.message = (this.name || 'Contract error') + ' : ' + err.message
     this.end.call(this, err, param)
+  } else if (this.currentStep >= this.steps.length) {
+    this.end.call(this, null, param)
   } else {
     this.steps[this.currentStep++]
       .fn.call(
         null,
-        err,
         param,
         this.next.bind(this)
       )
