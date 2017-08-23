@@ -1,69 +1,71 @@
-var validator = require('../src/validator');
+const v = require('../src/validator');
 
-
-describe('notNull validator', function () {
-  it ('test with null value', function (done) {
+describe('Validator - Testing notNull validator', function () {
+  it ('with null value', function (done) {
       // given : a null value
       var value = null;
 
       // when : call notNull validator
       var callbackError = function () {
-        validator.notNull(value, function (err) {
+        v.notNull(value, function (err) {
           throw err;
         });
       };
-      // expect : thrown Error
-      expect(callbackError).toThrow('value have to not null');
+
+      // then
+      expect(callbackError).toThrowError('value have to be not null');
       done();
   });
-  it ('test with undefined value', function (done) {
+  it ('with undefined value', function (done) {
       // given : a null value
       var value = undefined;
 
       // when : call notNull validator
       var callbackError = function () {
-        validator.notNull(value, function (err) {
+        v.notNull(value, function (err) {
           throw err;
         });
       };
-      // expect : thrown Error
-      expect(callbackError).toThrow('value have to not null');
+
+      // then
+      expect(callbackError).toThrowError('value have to be not null');
       done();
   });
-  it ('test with NaN value', function (done) {
+  it ('with NaN value', function (done) {
       // given : a null value
-      var value = NaN;
+      var value = NaN
 
       // when : call notNull validator
       var callbackError = function () {
-        validator.notNull(value, function (err) {
-          throw err;
-        });
-      };
-      // expect : thrown Error
-      expect(callbackError).toThrow('value have to not null');
-      done();
+        v.notNull(value, function (err) {
+          throw err
+        })
+      }
+
+      // then
+      expect(callbackError).toThrowError('value have to be not null')
+      done()
   });
-  it ('test with [] value', function (done) {
+  it ('with [] value', function (done) {
       // given : a null value
-      var value = [];
+      var value = []
 
       // when : call notNull validator
-      validator.notNull(value, function (err) {
-        // expect : value is not null
-        expect(err).toBeNull();
-        done();
+      v.notNull(value, function (err) {
+        // then : value is not null
+        expect(err).toBeNull()
+        done()
       });
   });
   it ('test with {} value', function (done) {
       // given : a null value
-      var value = {};
+      var value = {}
 
       // when : call notNull validator
-      validator.notNull(value, function (err) {
-        // expect : value is not null
-        expect(err).toBeNull();
-        done();
+      v.notNull(value, function (err) {
+        // then : value is not null
+        expect(err).toBeNull()
+        done()
       });
   });
   it ('test with "" value', function (done) {
@@ -71,7 +73,7 @@ describe('notNull validator', function () {
       var value = "";
 
       // when : call notNull validator
-      validator.notNull(value, function (err) {
+      v.notNull(value, function (err) {
         // expect : value is not null
         expect(err).toBeNull();
         done();
@@ -82,7 +84,7 @@ describe('notNull validator', function () {
       var value = '';
 
       // when : call notNull validator
-      validator.notNull(value, function (err) {
+      v.notNull(value, function (err) {
         // expect : value is not null
         expect(err).toBeNull();
         done();
@@ -93,7 +95,7 @@ describe('notNull validator', function () {
       var value = false;
 
       // when : call notNull validator
-      validator.notNull(value, function (err) {
+      v.notNull(value, function (err) {
         // expect : value is not null
         expect(err).toBeNull();
         done();
@@ -104,7 +106,7 @@ describe('notNull validator', function () {
       var value = 0;
 
       // when : call notNull validator
-      validator.notNull(value, function (err) {
+      v.notNull(value, function (err) {
         // expect : value is not null
         expect(err).toBeNull();
         done();
@@ -113,19 +115,20 @@ describe('notNull validator', function () {
 });
 
 
-describe('isNull validator', function () {
-  it ('test with null value', function (done) {
+describe('Validator - Testing isNull validator', function () {
+  it ('with null value', function (done) {
     // given : a null value
-    var value = null;
+    var value = null
 
     // when : call notNull validator
     var callbackError = function () {
-      validator.isNull(value, function (err) {
-        throw err;
-      });
-    };
-    // expect : thrown Error
-    expect(callbackError).toThrow('value have to not null');
-    done();
+      v.isNull(value, function (err) {
+        throw err
+      })
+    }
+
+    // then
+    expect(callbackError).toThrowError('value have to be null')
+    done()
   });
 });
