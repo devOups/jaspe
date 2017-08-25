@@ -1,17 +1,20 @@
+const jaspe = require('./utils')
+
 var Pipeline = function (name) {
   this.steps = []
   this.currentStep = 0
   this.name = name || ''
 }
 
-Pipeline.prototype.add = function (name, fn) {
+Pipeline.prototype.add = function (name, fn, args) {
   if (typeof fn !== 'function') {
     throw 'fn has to be a Function'
   }
 
   this.steps.push({
     name: name,
-    fn: fn
+    fn: fn,
+    args: args
   })
 }
 
@@ -30,13 +33,15 @@ Pipeline.prototype.next = function (err, param) {
   } else if (this.currentStep >= this.steps.length) {
     this.end.call(this, null, param)
   } else {
-    this.steps[this.currentStep++]
-      .fn.call(
-        null,
-        param,
-        this.next.bind(this)
-      )
+    let step = this.steps[this.currentStep++]
+    let stepArgs = []
+    if (step.args !== undefined) {
+      stepArgs = jaspe.arrayFromObject(step.args)
     }
+    let args = [param, ...stepArgs, this.next.bind(this)]
+
+    jaspe.apply(step.fn, null, args)
+  }
 }
 
 Pipeline.prototype.end = function (err, result) {

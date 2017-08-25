@@ -25,13 +25,14 @@ describe('Pipeline class - Testing add method', function () {
     // given
     let pipeline = new Pipeline()
     let fn = function () {}
+    let args = {min: 0, max: 10}
 
     // when
-    pipeline.add('P1', fn)
+    pipeline.add('P1', fn, args)
 
     // then
     expect(pipeline.steps.length).toEqual(1)
-    expect(pipeline.steps[0]).toEqual({name: 'P1', fn: fn})
+    expect(pipeline.steps[0]).toEqual({name: 'P1', fn: fn, args: args})
   })
   it ('with fn param is not a Function', function () {
     // given
@@ -148,7 +149,7 @@ describe('Pipeline class - Testing next method', function () {
     expect(pipeline.end.calls.argsFor(0)).toEqual([error, 1]);
     expect(error.message).toBe('Contract error : test failed');
   })
-  it ('with one step', function () {
+  it ('with one step without args', function () {
     // given
     let pipeline = new Pipeline();
 
@@ -170,6 +171,30 @@ describe('Pipeline class - Testing next method', function () {
     expect(step.fn.calls.count()).toEqual(1);
     expect(step.fn.calls.argsFor(0))
       .toEqual([1, jasmine.any(Function)]);
+  })
+  it ('with one step with args', function () {
+    // given
+    let pipeline = new Pipeline();
+
+    // and : one step and mock step.fn function
+    let step = {
+        name: 'S1',
+        fn: function () {},
+        args: {min: 0, max: 10}
+    }
+    spyOn(step, 'fn')
+
+    // and : add step
+    pipeline.steps.push(step);
+
+    // when
+    pipeline.next(null, 1)
+
+    // then
+    expect(step.fn).toHaveBeenCalled();
+    expect(step.fn.calls.count()).toEqual(1);
+    expect(step.fn.calls.argsFor(0))
+      .toEqual([1, 0, 10, jasmine.any(Function)]);
   })
 })
 describe('Pipeline class - Testing end method', function () {
