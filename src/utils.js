@@ -17,6 +17,11 @@ function apply(func, thisArg, args) {
   return func.apply(thisArg, args);
 }
 
+function arrayFromObject(obj) {
+  return Object.keys(obj).map(key => obj[key])
+}
+
 module.exports = {
-  apply: apply
+  apply: apply,
+  arrayFromObject: arrayFromObject
 }
