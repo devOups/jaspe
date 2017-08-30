@@ -114,7 +114,6 @@ describe('Validator - Testing notNull validator', function () {
   });
 });
 
-
 describe('Validator - Testing isNull validator', function () {
   it ('with null value', function (done) {
     // given : a null value
