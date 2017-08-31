@@ -1,9 +1,21 @@
 const jaspe = require('./utils')
 
-var Pipeline = function (name) {
-  this.steps = []
-  this.currentStep = 0
+var Pipeline = function (name, steps) {
   this.name = name || ''
+  this.currentStep = 0
+  this.steps = []
+
+  if (steps) {
+    let index = 0
+    let length = steps.length
+    for (; index < length; index++) {
+      this.add(
+        steps[index].name,
+        steps[index].validator,
+        steps[index].params
+      )
+    }
+  }
 }
 
 Pipeline.prototype.add = function (name, fn, args) {

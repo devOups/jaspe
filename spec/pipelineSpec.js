@@ -19,6 +19,27 @@ describe("Pipeline class - Testing constructor", function () {
     expect(pipeline.name).toBe('pipeline');
     expect(pipeline.steps).toEqual([]);
   });
+  it ("with defined name and steps", function () {
+    // given initial steps
+    let fn = () => {}
+    let steps = [
+      {
+        name: 'test',
+        validator: fn
+      }
+    ]
+
+    // and create pipeline
+    let pipeline = new Pipeline('pipeline', steps)
+
+    // then
+    expect(pipeline.currentStep).toBe(0)
+    expect(pipeline.steps.length).toBe(1)
+    expect(pipeline.name).toBe('pipeline')
+    expect(pipeline.steps[0].name).toBe('test')
+    expect(pipeline.steps[0].fn).toBe(fn)
+    expect(pipeline.steps[0].params).toBe(undefined)
+  });
 });
 describe('Pipeline class - Testing add method', function () {
   it ('with valid params', function () {
