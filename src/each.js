@@ -1,15 +1,20 @@
-function each(iterable, make, callback) {
-  let length = iterable.size
+function each(map, make, callback) {
+  let length = map.size
   let index = 0
   let results = []
+  let errors = []
   let completed = 0
 
-  iterable.forEach((value, key) => {
-    make(key, value, (err, result) => {
-      results.push(result)
-
+  map.forEach((value, key) => {
+    make(key, value, (err, result) => {      
+      if (err) {
+        errors.push(err)
+      } else {
+        results.push(result)
+      }
+      
       if ((++completed === length)) {
-        callback(null, results)
+        callback(errors, results)
       }
     })
   })    
