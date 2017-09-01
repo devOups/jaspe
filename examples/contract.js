@@ -1,5 +1,5 @@
-const v = require('./validator')
-const Contract = require('./core/contract')
+const v = require('../src/validator')
+const Contract = require('../src/core/contract')
 
 let requirements = new Map()
 let services = new Map()

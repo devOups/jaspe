@@ -1,4 +1,4 @@
-var Annotation = require('../src/annotation.js');
+var Annotation = require('../../src/parser/annotation.js');
 
 describe('annotation initaliaze', function() {
   it ('annotations provide', function() {

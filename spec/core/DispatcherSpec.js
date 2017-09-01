@@ -1,5 +1,5 @@
-const Contract = require('../src/core/contract')
-const dispatcher = require('../src/core/dispatcher');
+const Contract = require('../../src/core/contract')
+const dispatcher = require('../../src/core/dispatcher');
 
 describe("Dispatcher class - Testing constructor", function () {
   it ("with default valid params", function () {
@@ -229,7 +229,7 @@ describe('Dispatcher class - Testing dispatch method', function () {
       // then
       expect(contract.check).toHaveBeenCalled()
       expect(contract.check.calls.count()).toEqual(1)
-      expect(contract.check.calls.argsFor(0)).toEqual([service, []])
+      expect(contract.check.calls.argsFor(0)).toEqual([service, undefined])
     })
   })
 })

@@ -10,7 +10,7 @@ class Contract {
 
   register (service, requirements) {
     if (!service) {            
-          throw 'service must be not null undefined or empty string'
+      throw 'service must be not null undefined or empty string'
     }
     
     if (this.isAlreadyRegister(service)) {
@@ -52,7 +52,7 @@ class Contract {
     let p = new Pipeline(nameOfParam, requirement)
     next(null, (callback) => {           
       p.run(params[nameOfParam], callback)
-     })
+    })
   }
 }
 

@@ -1,4 +1,4 @@
-const Contract = require('../src/core/contract')
+const Contract = require('../../src/core/contract')
 
 describe('Contract class - Testing constructor', function () {
   it ('with default param', function () {
