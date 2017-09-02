@@ -1,11 +1,10 @@
 const dispatcher = require('../src/core/dispatcher')
-const contract = require('./contract')
+const accountContract = require('./AccountComponent/contract/contract')
+const accountEntryPoint = require('./AccountComponent/entryPoint')
 
-var startTime = new Date().getTime();
-var elapsedTime = 0;
+dispatcher.register('AccountService', accountContract, accountEntryPoint)
 
-dispatcher.register('AccountService', contract)
-
+var t0 = new Date().getTime()
 params = {
   username: 'quentin',
   email: 'quentinsaieb@hotmail.fr',
@@ -13,10 +12,19 @@ params = {
 }
 
 dispatcher.dispatch('AccountService', 'create', params)
-.then(function (data) {
-  console.log('contract is ok')
-  console.log(data)
+.then(function (account) {
+  console.log(account)
 })
 .catch(function (err) {
   console.log(err)
 })
+
+// dispatcher.dispatch('AccountService', 'create', params)
+// .then(function (account) {
+//   var t1 = new Date().getTime()
+//   console.log(account)
+//   console.log("Finished in " + (t1 - t0) + " milliseconds.")
+// })
+// .catch(function (err) {
+//   console.log(err)
+// })
