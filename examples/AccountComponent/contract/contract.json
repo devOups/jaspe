@@ -4,31 +4,26 @@
 	"services": [{
 		"name": "CREATE",
 		"requirements": [{
-				"username": {
-					"typeOf": "String",
-					"constraints": ["@notNull", "@notEmpty", "@pattern()"]
-				},
-				"email": {
-					"typeOf": "String",
-					"constraints": ["@notNull", "@notEmpty", "@email"]
-				},
-				"age": {
-					"typeOf": "Number",
-					"constraints": ["@notNull", "@min(0)"]
-				}
-			}],
-			"returns": ["Account"]
-		}, {
-			"name": "DELETE",
-			"requirements": [{
-				"accountId": {
-					"typeOf": "String",
-					"constraints": ["@notNull", "@notEmpty", "@objectId"]
-				}
-			}],
-			"returns": {
-				"true": "if accountId found",
-				"exception": "AccountException: account is not found"
+			"username": {
+				"typeOf": "String",
+				"constraints": ["@notNull", "@notEmpty"]
+			},
+			"email": {
+				"typeOf": "String",
+				"constraints": ["@notNull", "@notEmpty", "@email"]
+			},
+			"age": {
+				"typeOf": "Number",
+				"constraints": ["@notNull", "@range(0, 110)"]
 			}
 		}]
+	}, {
+		"name": "DELETE",
+		"requirements": [{
+			"accountId": {
+				"typeOf": "String",
+				"constraints": ["@notNull", "@notEmpty", "@objectId"]
+			}
+		}]
+	}]
 }

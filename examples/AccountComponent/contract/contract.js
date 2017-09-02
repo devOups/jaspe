@@ -1,12 +1,12 @@
 const v = require('../../../src/validator')
 const Contract = require('../../../src/core/contract')
 
-let requirements = new Map()
 let services = new Map()
 
 /**
  * Create service
  */
+let create_requirements = new Map()
 requirements.set('username', [
   {
     name: 'typeOf string',
