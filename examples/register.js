@@ -1,5 +1,7 @@
-const dispatcher = require('../src/core/dispatcher')
-const accountContract = require('./AccountComponent/contract')
-import entryPoint from './AccountComponent/entryPoint'
+let register = [{
+  serviceName: 'AccountService', 
+  contract: require('./AccountComponent/contract/contract'), 
+  entryPoint: require('./AccountComponent/entryPoint')
+}]
 
-dispatcher.register('AccountService', accountContract, entryPoint)
+module.exports = register

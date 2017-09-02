@@ -64,6 +64,24 @@ services.set('create', requirements)
 /**
  * Delete service
  */
+let delete_requirements = new Map()
+delete_requirements.set('accountId', [
+  {
+    name: 'typeOf string',
+    validator: v.typeOf,
+    params: {typeOf: 'string'}
+  },
+  {
+    name: 'notNull',
+    validator: v.notNull
+
+  },
+  {
+    name: 'notEmpty',
+    validator: v.notEmpty,
+  }
+])
+services.set('delete', delete_requirements)
 
 
 module.exports = new Contract('AccountContract', services)

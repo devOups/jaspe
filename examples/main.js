@@ -1,11 +1,16 @@
 const dispatcher = require('../src/core/dispatcher')
-const accountContract = require('./AccountComponent/contract/contract')
-const accountEntryPoint = require('./AccountComponent/entryPoint')
+const register = require('./register')
 
-dispatcher.register('AccountService', accountContract, accountEntryPoint)
+// add register to dispatcher
+try {
+  dispatcher.use(register)
+} catch (err) {
+  console.log(err)
+  
+  return
+}
 
-var t0 = new Date().getTime()
-params = {
+let params = {
   username: 'quentin',
   email: 'quentinsaieb@hotmail.fr',
   age: 24
@@ -19,12 +24,12 @@ dispatcher.dispatch('AccountService', 'create', params)
   console.log(err)
 })
 
-// dispatcher.dispatch('AccountService', 'create', params)
-// .then(function (account) {
-//   var t1 = new Date().getTime()
-//   console.log(account)
-//   console.log("Finished in " + (t1 - t0) + " milliseconds.")
-// })
-// .catch(function (err) {
-//   console.log(err)
-// })
+dispatcher.dispatch('AccountService', 'delete', {accountId : '45'})
+.then(function (result) {
+  console.log(result)
+})
+.catch(function (err) {
+  console.log(err)
+})
+
+
