@@ -31,5 +31,3 @@ dispatcher.dispatch('AccountService', 'delete', {accountId : '45'})
 .catch(function (err) {
   console.log(err)
 })
-
-
