@@ -2,6 +2,7 @@
   "name": "jaspe",
   "version": "1.0.0",
   "description": "Framework Js to design component with contract model",
+  "repository": "https://github.com/devOups/jaspe",
   "scripts": {
     "test": "jasmine"
   },
@@ -12,6 +13,7 @@
     "Contract programming"
   ],
   "author": "quentin saieb <pitoux16+jaspe@gmail.com>",
+
   "license": "MIT",
   "devDependencies": {
     "jasmine": "^2.7.0"
