@@ -1,24 +1,28 @@
 const Contract = require('./contract')
+const EntryPoint = require('./entryPoint')
 
 class Dispatcher {
   constructor () {
-	this.registry = new Map()
+		this.registry = new Map()
 	}
 
 	dispatch (serviceName, service, params) {
 		return new Promise((resolve, reject) => {
 			if (!this.isAlreadyRegister(serviceName)) {
-				reject(new Error('service name is not register'))
+				reject(new Error('service name: ' + serviceName + ' is not register'))
 			} else {
-				let contract = this.registry.get(serviceName)
-				contract.check(service, params)
-				.then(resolve)
+				let component = this.registry.get(serviceName)
+				component.contract.check(service, params)
+				.then((validParams) => {
+					component.entryPoint.invoke(service, validParams)
+					.then(resolve).catch(reject)
+				})
 				.catch(reject)
 			}
 		})
 	}
-
-	register (serviceName, contract) {
+	
+	register (serviceName, contract, entryPoint) {
 		if (!serviceName) {            
 			throw 'serviceName must be not null undefined or empty string'
 		}
@@ -31,7 +35,11 @@ class Dispatcher {
 			throw 'contract must be a Contract instance'
 		}
 
-		this.registry.set(serviceName, contract)
+		if (!(entryPoint instanceof EntryPoint)) {
+			throw 'entryPoint must be a EntryPoint instance'
+		}
+
+		this.registry.set(serviceName, {contract, entryPoint})
 	}
 
 	isAlreadyRegister (serviceName) {

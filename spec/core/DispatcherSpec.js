@@ -1,5 +1,6 @@
 const Contract = require('../../src/core/contract')
-const dispatcher = require('../../src/core/dispatcher');
+const dispatcher = require('../../src/core/dispatcher')
+const EntryPoint = require('../../src/core/entryPoint')
 
 describe("Dispatcher class - Testing constructor", function () {
   it ("with default valid params", function () {
@@ -97,7 +98,7 @@ describe('Dispatcher class - Testing register method', function () {
     // and serviceName
     let serviceName = 'serviceName'
 
-    // and the linked contract
+    // and an invalid linked contract
     let contract = null
 
     // when
@@ -107,6 +108,30 @@ describe('Dispatcher class - Testing register method', function () {
     
     // then
     expect(thrown).toThrow('contract must be a Contract instance')
+  })
+  it ("with invalid param entryPoint", function () {
+    // given
+    dispatcher
+
+    // and mock isAlreadyRegister method
+    spyOn(dispatcher, 'isAlreadyRegister').and.returnValue(false)
+    
+    // and serviceName
+    let serviceName = 'serviceName'
+
+    // and the linked contract
+    let contract = new Contract()
+
+    // and an invalid entryPoint
+    let entryPoint = null
+
+    // when
+    let thrown = function () {
+      dispatcher.register(serviceName, contract, entryPoint)
+    }
+    
+    // then
+    expect(thrown).toThrow('entryPoint must be a EntryPoint instance')
   })
   it ("with valid params", function () {
     // given
@@ -118,13 +143,19 @@ describe('Dispatcher class - Testing register method', function () {
     // and the linked contract
     let contract = new Contract()
 
+    // and mock isAlreadyRegister method
+    spyOn(dispatcher, 'isAlreadyRegister').and.returnValue(false)
+
+    // and an entryPoint
+    let entryPoint = new EntryPoint()
+
     // when
-    dispatcher.register(serviceName, contract)
+    dispatcher.register(serviceName, contract, entryPoint)
 
     // then
     expect(dispatcher.registry.size).toBe(1)
     expect(dispatcher.registry.has(serviceName)).toBe(true)
-    expect(dispatcher.registry.get(serviceName)).toBe(contract)
+    expect(dispatcher.registry.get(serviceName)).toEqual({contract, entryPoint})
   })
 })
 
@@ -190,7 +221,7 @@ describe('Dispatcher class - Testing dispatch method', function () {
       .catch(reject)
     })
     .catch(function (err) {
-      expect(err.message).toBe('service name is not register')
+      expect(err.message).toBe('service name: ' + serviceName + ' is not register')
     })
   })
   it ('with the service name in register', function () {
@@ -202,7 +233,7 @@ describe('Dispatcher class - Testing dispatch method', function () {
 
     // and service
     let service = 'create'
-
+    
     // and create contract
     // and mock check method
     let contract = new Contract()
@@ -213,12 +244,23 @@ describe('Dispatcher class - Testing dispatch method', function () {
      
       return p
     })
+
+    // and create entryPoint
+    // and mock invoke method
+    let entryPoint = new EntryPoint()
+    spyOn(entryPoint, 'invoke').and.callFake(function () {
+      let p = new Promise((resolve, reject) => {
+        resolve()
+      })
+
+      return p
+    })
   
     // and mock isAlreadyRegister
     spyOn(dispatcher, 'isAlreadyRegister').and.returnValue(true)
 
     // and mock return of registry.get
-    spyOn(dispatcher.registry, 'get').and.returnValue(contract)
+    spyOn(dispatcher.registry, 'get').and.returnValue({contract, entryPoint})
 
     // when
     return new Promise((resolve, reject) => {
@@ -230,6 +272,11 @@ describe('Dispatcher class - Testing dispatch method', function () {
       expect(contract.check).toHaveBeenCalled()
       expect(contract.check.calls.count()).toEqual(1)
       expect(contract.check.calls.argsFor(0)).toEqual([service, undefined])
+      
+      // and
+      expect(entryPoint.invoke).toHaveBeenCalled()
+      expect(entryPoint.invoke.calls.count()).toEqual(1)
+      expect(entryPoint.invoke.calls.argsFor(0)).toEqual([service, undefined])
     })
   })
 })
