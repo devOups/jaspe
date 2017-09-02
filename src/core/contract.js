@@ -34,7 +34,13 @@ class Contract {
         reject(new Error('service: ' + service + ' is not register'))
       } else {
         let requirements = this.services.get(service)
-        each(requirements, this._contructPipelineValidator, (err, pipelines) => {
+        each(requirements, (nameOfParam, requirement, next) => {
+          // for each item in requirements
+          let p = new Pipeline(nameOfParam, requirement)
+          next(null, (callback) => {           
+            p.run(params[nameOfParam], callback)
+          })
+        }, (err, pipelines) => {
           // when all pipelines are built, run them
           parallel(pipelines, (err, data) => {
             if (err.length !== 0) {
@@ -45,13 +51,6 @@ class Contract {
           })
         })
       }
-    })
-  }
-
-  _contructPipelineValidator (nameOfParam, requirement, next) {
-    let p = new Pipeline(nameOfParam, requirement)
-    next(null, (callback) => {           
-      p.run(params[nameOfParam], callback)
     })
   }
 }

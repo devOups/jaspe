@@ -29,7 +29,7 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrow('serviceName must be not null undefined or empty string')
+    expect(thrown).toThrowError('serviceName must be not null undefined or empty string')
   })
   it ("with undefined service name", function () {
     // given
@@ -47,7 +47,7 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrow('serviceName must be not null undefined or empty string')
+    expect(thrown).toThrowError('serviceName must be not null undefined or empty string')
   })
   it ("with empty service name", function () {
     // given
@@ -65,7 +65,7 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrow('serviceName must be not null undefined or empty string')
+    expect(thrown).toThrowError('serviceName must be not null undefined or empty string')
   })
   it ("with service name already register", function () {
     // given
@@ -86,7 +86,7 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrow('service with the same name already register')
+    expect(thrown).toThrowError('service with the same name already register')
   })
   it ("with invalid param contract", function () {
     // given
@@ -107,7 +107,7 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrow('contract must be a Contract instance')
+    expect(thrown).toThrowError('contract must be a Contract instance')
   })
   it ("with invalid param entryPoint", function () {
     // given
@@ -131,7 +131,7 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrow('entryPoint must be a EntryPoint instance')
+    expect(thrown).toThrowError('entryPoint must be a EntryPoint instance')
   })
   it ("with valid params", function () {
     // given

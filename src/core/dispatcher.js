@@ -24,19 +24,19 @@ class Dispatcher {
 	
 	register (serviceName, contract, entryPoint) {
 		if (!serviceName) {            
-			throw 'serviceName must be not null undefined or empty string'
+			throw new Error('serviceName must be not null undefined or empty string')
 		}
 
 		if (this.isAlreadyRegister(serviceName)) {
-			throw 'service with the same name already register'
+			throw new Error('service with the same name already register')
 		}
 
 		if (!(contract instanceof Contract)) {
-			throw 'contract must be a Contract instance'
+			throw new Error('contract must be a Contract instance')
 		}
 
 		if (!(entryPoint instanceof EntryPoint)) {
-			throw 'entryPoint must be a EntryPoint instance'
+			throw new Error('entryPoint must be a EntryPoint instance')
 		}
 
 		this.registry.set(serviceName, {contract, entryPoint})
@@ -44,6 +44,23 @@ class Dispatcher {
 
 	isAlreadyRegister (serviceName) {
 		return this.registry.has(serviceName)
+	}
+
+	use (register) {
+		let length = register.length
+		let index = 0
+
+		for (; index < length; index++) {
+			try {
+				this.register(
+					register[index].serviceName,
+					register[index].contract,
+					register[index].entryPoint
+				)
+			} catch (err) {
+				throw err
+			}
+		}
 	}
 }
 
