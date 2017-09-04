@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Framework Js to design component with contract model",
   "repository": "https://github.com/devOups/jaspe",
+  "main": "jaspe.js",
   "scripts": {
     "test": "jasmine"
   },
