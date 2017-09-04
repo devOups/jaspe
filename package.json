@@ -1,6 +1,6 @@
 {
   "name": "jaspe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Framework Js to design component with contract model",
   "repository": "https://github.com/devOups/jaspe",
   "main": "jaspe.js",
