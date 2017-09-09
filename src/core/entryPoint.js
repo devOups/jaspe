@@ -11,7 +11,7 @@ class EntryPoint extends EventEmitter {
         }
       }
 
-      this.emit.apply(this, [service, ...params, callback])
+      this.emit.apply(this, [service, ...params, callback]) // eslint-disable-line
     })
   }
 }

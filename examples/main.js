@@ -21,10 +21,11 @@ dispatcher.dispatch('AccountService', 'create', params)
   console.log(account)
 })
 .catch(function (err) {
+  console.log('***')
   console.log(err)
 })
 
-dispatcher.dispatch('AccountService', 'delete', {accountId : '45'})
+dispatcher.dispatch('AccountService', 'delete', {accountId: '45'})
 .then(function (result) {
   console.log(result)
 })

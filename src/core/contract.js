@@ -9,16 +9,16 @@ class Contract {
   }
 
   register (service, requirements) {
-    if (!service) {            
-      throw 'service must be not null undefined or empty string'
-    }
-    
-    if (this.isAlreadyRegister(service)) {
-      throw 'service: ' + service + ' with the same name already register'
+    if (!service) {
+      throw new Error('service must be not null undefined or empty string')
     }
 
-    if(!(requirements instanceof Map)) {
-      throw 'requirements must be a Map instance'
+    if (this.isAlreadyRegister(service)) {
+      throw new Error('service: ' + service + ' with the same name already register')
+    }
+
+    if (!(requirements instanceof Map)) {
+      throw new Error('requirements must be a Map instance')
     }
 
     this.services.set(service, requirements)
@@ -37,10 +37,13 @@ class Contract {
         each(requirements, (nameOfParam, requirement, next) => {
           // for each item in requirements
           let p = new Pipeline(nameOfParam, requirement)
-          next(null, (callback) => {           
+          next(null, (callback) => {
             p.run(params[nameOfParam], callback)
           })
         }, (err, pipelines) => {
+          if (err.length !== 0) {
+            return reject(err)
+          }
           // when all pipelines are built, run them
           parallel(pipelines, (err, data) => {
             if (err.length !== 0) {

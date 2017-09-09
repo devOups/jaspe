@@ -1,4 +1,5 @@
 const Contract = require('../../src/core/contract')
+const v = require('../../src/validator')
 
 describe('Contract class - Testing constructor', function () {
   it ('with default param', function () {
@@ -61,7 +62,7 @@ describe('Contract class - Testing register method', function () {
     }
 
     // then
-    expect(thrown).toThrow('service must be not null undefined or empty string')    
+    expect(thrown).toThrowError('service must be not null undefined or empty string')    
   })
   it ('with service already register', function () {
      // given
@@ -79,7 +80,7 @@ describe('Contract class - Testing register method', function () {
     }
 
     // then
-    expect(thrown).toThrow('service: ' + service + ' with the same name already register')    
+    expect(thrown).toThrowError('service: ' + service + ' with the same name already register')    
   })
   it ('with requirements of the service is not map instance', function () {
     // given
@@ -94,7 +95,7 @@ describe('Contract class - Testing register method', function () {
     }
 
     // then
-    expect(thrown).toThrow('requirements must be a Map instance')
+    expect(thrown).toThrowError('requirements must be a Map instance')
   })
   it ('with valid params', function () {
     // given
@@ -137,6 +138,137 @@ describe('Contract class - Testing check method', function () {
     })
     .catch(function (err) {
       expect(err.message).toBe('service: ' + service + ' is not register')
+    })
+  })
+  it('with valid param', function () {
+    // given
+    let contract = new Contract()
+
+    // and service name
+    let service = 'create'
+
+    // and requirements
+    let requirements = new Map()
+    requirements.set('username', [
+      {
+        name: 'typeOf string',
+        validator: v.typeOf,
+        params: {typeOf: 'string'}
+      },
+      {
+        name: 'notNull',
+        validator: v.notNull
+      },
+      {
+        name: 'notEmpty',
+        validator: v.notEmpty
+      }
+    ])
+    requirements.set('email', [
+      {
+        name: 'typeOf string',
+        validator: v.typeOf,
+        params: {typeOf: 'string'}
+      },
+      {
+        name: 'notNull',
+        validator: v.notNull
+      },
+      {
+        name: 'notEmpty',
+        validator: v.notEmpty
+      },
+      {
+        name: 'email',
+        validator: v.email
+      }
+    ])
+
+    // and mock isAlreadyRegister
+    spyOn(contract, 'isAlreadyRegister').and.returnValue(true)
+
+    // and get method
+    spyOn(contract.services, 'get').and.returnValue(requirements)
+
+    // and parameters
+    let username = 'jaspe'
+    let email = 'jaspe@jaspe.fr'
+
+    // when
+    return new Promise((resolve, reject) => {
+      contract.check(service, {username, email})
+      .then(resolve)
+    })
+    .then(function (result) {
+      // then
+      expect(result.length).toBe(2)
+      expect(result).toEqual([username, email])
+    })
+  })
+  it('with valid invalid params', function () {
+    // given
+    let contract = new Contract()
+
+    // and service name
+    let service = 'create'
+
+    // and requirements
+    let requirements = new Map()
+    requirements.set('username', [
+      {
+        name: 'typeOf string',
+        validator: v.typeOf,
+        params: {typeOf: 'string'}
+      },
+      {
+        name: 'notNull',
+        validator: v.notNull
+      },
+      {
+        name: 'notEmpty',
+        validator: v.notEmpty
+      }
+    ])
+    requirements.set('email', [
+      {
+        name: 'typeOf string',
+        validator: v.typeOf,
+        params: {typeOf: 'string'}
+      },
+      {
+        name: 'notNull',
+        validator: v.notNull
+      },
+      {
+        name: 'notEmpty',
+        validator: v.notEmpty
+      },
+      {
+        name: 'email',
+        validator: v.email
+      }
+    ])
+
+    // and mock isAlreadyRegister
+    spyOn(contract, 'isAlreadyRegister').and.returnValue(true)
+
+    // and get method
+    spyOn(contract.services, 'get').and.returnValue(requirements)
+
+    // and parameters
+    let username = ''
+    let email = 'jaspejaspe.fr'
+
+    // when
+    return new Promise((resolve, reject) => {
+      contract.check(service, {username, email})
+      .catch(reject)
+    })
+    .catch(function (err) {
+      // then
+      expect(err.length).toBe(2)
+      expect(err[0].message).toEqual('username : value have to be not empty')
+      expect(err[1].message).toEqual('email : value have to match with pattern')
     })
   })
 })

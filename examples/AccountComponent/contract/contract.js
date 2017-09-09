@@ -6,8 +6,8 @@ let services = new Map()
 /**
  * Create service
  */
-let create_requirements = new Map()
-requirements.set('username', [
+let createRequirements = new Map()
+createRequirements.set('username', [
   {
     name: 'typeOf string',
     validator: v.typeOf,
@@ -23,7 +23,7 @@ requirements.set('username', [
   }
 ])
 
-requirements.set('email', [
+createRequirements.set('email', [
   {
     name: 'typeOf string',
     validator: v.typeOf,
@@ -43,7 +43,7 @@ requirements.set('email', [
   }
 ])
 
-requirements.set('age', [
+createRequirements.set('age', [
   {
     name: 'typeof integer',
     validator: v.isInteger
@@ -59,13 +59,13 @@ requirements.set('age', [
   }
 
 ])
-services.set('create', requirements)
+services.set('create', createRequirements)
 
 /**
  * Delete service
  */
-let delete_requirements = new Map()
-delete_requirements.set('accountId', [
+let deleteRequirements = new Map()
+deleteRequirements.set('accountId', [
   {
     name: 'typeOf string',
     validator: v.typeOf,
@@ -78,10 +78,10 @@ delete_requirements.set('accountId', [
   },
   {
     name: 'notEmpty',
-    validator: v.notEmpty,
+    validator: v.notEmpty
   }
 ])
-services.set('delete', delete_requirements)
+services.set('delete', deleteRequirements)
 
 
 module.exports = new Contract('AccountContract', services)

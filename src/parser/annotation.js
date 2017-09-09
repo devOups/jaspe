@@ -8,7 +8,7 @@ var ANNOTATION_ENUM = {
   '@pattern': 6,
   '@email': 7,
   '@objectId': 8
-};
+}
 
 /**
 * Parse a str annotation
@@ -19,28 +19,27 @@ var ANNOTATION_ENUM = {
 * @return {Object} annotation name, interger value and params
 */
 var parseAnnotation = function (strAnnotation) {
-  var regex = /(^@[a-zA-Z]+)(\(\s*([^)]+?)\s*\)){0,1}/;
-  var match = regex.exec(strAnnotation);
-  var params = [];
+  var regex = /(^@[a-zA-Z]+)(\(\s*([^)]+?)\s*\)){0,1}/
+  var match = regex.exec(strAnnotation)
+  var params = []
 
-  if (!match) throw ('Annotation syntaxe is incorrect');
+  if (!match) throw new Error('Annotation syntaxe is incorrect')
 
-  var annotation = ANNOTATION_ENUM[match[1]];
-  if (annotation === undefined) throw 'Annotation is unknown';
+  var annotation = ANNOTATION_ENUM[match[1]]
+  if (annotation === undefined) throw new Error('Annotation is unknown')
 
   if (match[3]) {
-    params = match[3].split(/\s*,\s*/);
+    params = match[3].split(/\s*,\s*/)
   }
 
   return {
     annotation: match[1],
     index: annotation,
     params: params
-  };
-};
-
+  }
+}
 
 module.exports = {
   enum: ANNOTATION_ENUM,
   parse: parseAnnotation
-};
+}

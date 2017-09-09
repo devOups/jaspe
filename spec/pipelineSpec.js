@@ -66,7 +66,7 @@ describe('Pipeline class - Testing add method', function () {
     }
 
     // then
-    expect(thrown).toThrow('fn has to be a Function')
+    expect(thrown).toThrowError('fn has to be a Function')
   })
 })
 describe('Pipeline class - Testing run method', function () {
@@ -83,7 +83,7 @@ describe('Pipeline class - Testing run method', function () {
     }
 
     // then
-    expect(thrown).toThrow('callback has to be a Function')
+    expect(thrown).toThrowError('callback has to be a Function')
   })
   it ('with valid params', function () {
     // given
@@ -153,8 +153,8 @@ describe('Pipeline class - Testing next method', function () {
 
     // and : one step and mock step.fn function
     let step = {
-        name: 'S1',
-        fn: function () {}
+      name: 'S1',
+      fn: function () {}
     }
     spyOn(step, 'fn')
 
@@ -176,8 +176,8 @@ describe('Pipeline class - Testing next method', function () {
 
     // and : one step and mock step.fn function
     let step = {
-        name: 'S1',
-        fn: function () {}
+      name: 'S1',
+      fn: function () {}
     }
     spyOn(step, 'fn')
 

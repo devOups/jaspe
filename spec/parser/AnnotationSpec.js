@@ -29,7 +29,7 @@ describe('annotations parseAnnotation method', function () {
     };
 
     // expected : thrown Error
-    expect(parsedAnnotation).toThrow('Annotation is unknown');
+    expect(parsedAnnotation).toThrowError('Annotation is unknown');
   });
 
   it ('test without @ tag on the first character', function () {
@@ -42,7 +42,7 @@ describe('annotations parseAnnotation method', function () {
     };
 
     // expected : thrown Error
-    expect(parsedAnnotation).toThrow('Annotation syntaxe is incorrect');
+    expect(parsedAnnotation).toThrowError('Annotation syntaxe is incorrect');
   });
 
   it ('test with the first characters are number', function () {
@@ -55,7 +55,7 @@ describe('annotations parseAnnotation method', function () {
     };
 
     // expected : thrown Error
-    expect(parsedAnnotation).toThrow('Annotation syntaxe is incorrect');
+    expect(parsedAnnotation).toThrowError('Annotation syntaxe is incorrect');
   });
 
   it ('test with empty params', function () {

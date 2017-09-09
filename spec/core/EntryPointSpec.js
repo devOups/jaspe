@@ -6,8 +6,8 @@ describe('Entrypoint class - Testing invoke method', function () {
     let entryPoint = new EntryPoint()
 
     // and mock emit method
-    spyOn(entryPoint, 'emit').and.callFake(function (s, username, email, cb) {
-     cb()
+    spyOn(entryPoint, 'emit').and.callFake((s, username, email, cb) => {
+      cb()
     })
 
     // and service
