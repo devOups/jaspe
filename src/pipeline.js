@@ -1,3 +1,5 @@
+'use strict'
+
 const jaspe = require('./utils')
 
 var Pipeline = function (name, steps) {

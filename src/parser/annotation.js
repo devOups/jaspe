@@ -1,3 +1,5 @@
+'use strict'
+
 var ANNOTATION_ENUM = {
   '@notNull': 0,
   '@isNull': 1,

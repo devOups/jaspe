@@ -1,3 +1,5 @@
+'use strict'
+
 const v = require('../src/validator');
 
 describe('Validator - Testing notNull validator', function () {

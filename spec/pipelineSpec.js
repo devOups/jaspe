@@ -1,3 +1,5 @@
+'use strict'
+
 const Pipeline = require('../src/pipeline');
 
 describe("Pipeline class - Testing constructor", function () {

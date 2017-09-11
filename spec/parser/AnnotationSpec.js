@@ -1,3 +1,5 @@
+'use strict'
+
 var Annotation = require('../../src/parser/annotation.js');
 
 describe('annotation initaliaze', function() {

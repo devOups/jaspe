@@ -1,3 +1,5 @@
+'use strict'
+
 const Contract = require('./contract')
 const EntryPoint = require('./entryPoint')
 

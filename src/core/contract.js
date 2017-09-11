@@ -1,3 +1,5 @@
+'use strict'
+
 const Pipeline = require('../pipeline')
 const parallel = require('../parallel')
 const each = require('../each')

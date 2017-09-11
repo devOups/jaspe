@@ -1,3 +1,5 @@
+'use strict'
+
 const EntryPoint = require('../../src/core/entryPoint')
 
 describe('Entrypoint class - Testing invoke method', function () {

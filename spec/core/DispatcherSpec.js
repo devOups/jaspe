@@ -1,3 +1,5 @@
+'use strict'
+
 const Contract = require('../../src/core/contract')
 const dispatcher = require('../../src/core/dispatcher')
 const EntryPoint = require('../../src/core/entryPoint')

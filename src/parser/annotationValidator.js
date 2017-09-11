@@ -1,3 +1,5 @@
+'use strict'
+
 const validator = require('./validator')
 const annotation = require('./annotation')
 const utils = require('./utils')

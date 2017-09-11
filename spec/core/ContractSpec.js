@@ -1,3 +1,5 @@
+'use strict'
+
 const Contract = require('../../src/core/contract')
 const v = require('../../src/validator')
 

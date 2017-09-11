@@ -1,3 +1,5 @@
+'use strict'
+
 const parallel = require('../src/parallel')
 
 describe('Testing parallel function', function () {

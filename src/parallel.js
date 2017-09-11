@@ -1,3 +1,5 @@
+'use strict'
+
 function parallel (tasks, callback) {
   let index = 0
   let completed = 0

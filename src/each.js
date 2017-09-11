@@ -1,3 +1,5 @@
+'use strict'
+
 function each (map, make, callback) {
   let length = map.size
   let results = []

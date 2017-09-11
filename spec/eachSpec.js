@@ -1,3 +1,5 @@
+'use strict'
+
 const each = require('../src/each')
 
 describe('Testing each function', function () {

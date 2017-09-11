@@ -1,3 +1,5 @@
+'use strict'
+
 let typeOf = function (value, typeRef, callback) {
   typeof value === typeRef // eslint-disable-line
     ? callback(null, value)
