@@ -1,18 +1,21 @@
 language: node_js
 node_js:
-  - "5"
-  - "6"
-  - "7"
-  - "8"
-  - "node"
+- '5'
+- '6'
+- '7'
+- '8'
+- node
 cache:
   directories:
-    - node_modules
+  - node_modules
 before_install:
-  # Update Node.js modules
-  - "test ! -d node_modules || npm prune"
-  - "test ! -d node_modules || npm rebuild"
-
+- test ! -d node_modules || npm prune
+- test ! -d node_modules || npm rebuild
 script:
-  - "npm run test"
-  - "npm run eslint"
+- npm run test
+- npm run eslint
+notifications:
+  email:
+    - pitoux16+jaspe@gmail.com
+  slack:
+    secure: eVW4nwazduxwH/OOPHdaE1d24Qes+pgrn+FJ1lY4xK//GBJt4lSltBAzzqSSyRgGHYWcsnYVesozidDAonUgwp7jNx7cizuILBnjIvDgwhkIYYYmhuV60NtEr23tXL9u3SJB/um+vQv+d49BKBRPpXcCYKCdc+3r5rYlYQwfHXnWiqzXGLLLsHrwLsOmutQNbilHkX0b0/SPQhh6pASW2+ZlJHiP4eU5woBIV5CGO52YUu4KAiR4YT1GP1oMzOO/5nPgPQ1ZSpKHd8jE4eeDMsUlVKMgSDRICH7Vmk/Txl2gXnFDy7eqw8H8/kzirIDHh7+AnCcG8+WQyOKjgdrJZIAX1O3wO+4xkwedtnV0R8TQNGw6TJ5zPW9ieU0GTat0W8hgChiEsVNR/HA1RZzpHLwyA0yllA1HKdnuO+1bBN31kRsCkw0Vt4ts457CnV9ForCW0mnuZ5NUW5agL8SzKeIZvM4llW+A02uy6v3v7bW0GtuLVEqqapQVQCRVfa9fBgYvTuToiIEVwMovh65DB1MS4LYuelrviAQWnh6Mmg4gBUVSNx0skGz/VlqNwpWE2ldpzqC6hC+5lx3SxP5UHm3E8ScCrs9G3KWcLhM28A8lS8ltMvP33UcsJlDB6xIZ67PZ9rIIl898jmHY/U9gFmyou+hdkj4pSRcRhPpchgg=
