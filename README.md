@@ -1,6 +1,10 @@
 # Jaspe
 Framework for NodeJs to design software component with contract paradigm
 
+[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/devOups/jaspe)
+
+[jaspe.slack.com](https://jaspe.slack.com)
+
 ## Installation
 ```bash
 $ npm install jaspe
