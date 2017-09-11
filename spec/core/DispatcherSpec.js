@@ -282,3 +282,91 @@ describe('Dispatcher class - Testing dispatch method', function () {
     })
   })
 })
+
+describe('Dispatcher class - Testing use method', function () {
+  it('with invalid serviceName in register', function (done) {
+    // given
+    dispatcher
+
+    // and
+    let register = [{
+      serviceName: '',
+      contract: null,
+      entryPoint: null
+    }]
+
+    // when
+    let callbackError = function () {
+      dispatcher.use(register)
+    }
+
+    // then
+    expect(callbackError).toThrowError('serviceName must be not null undefined or empty string')
+    done()
+  })
+  it('with invalid contract in register', function (done) {
+    // given
+    dispatcher
+
+    // and
+    let register = [{
+      serviceName: 'jaspeTest',
+      contract: null,
+      entryPoint: null
+    }]
+
+    // when
+    let callbackError = function () {
+      dispatcher.use(register)
+    }
+
+    // then
+    expect(callbackError).toThrowError('contract must be a Contract instance')
+    done()
+  })
+  it('with invalid entrypoint in register', function (done) {
+    // given
+    dispatcher
+
+    // and
+    let register = [{
+      serviceName: 'jaspeTest',
+      contract: new Contract(),
+      entryPoint: null
+    }]
+
+    // when
+    let callbackError = function () {
+      dispatcher.use(register)
+    }
+
+    // then
+    expect(callbackError).toThrowError('entryPoint must be a EntryPoint instance')
+    done()
+  })
+  it('with valid register', function () {
+    // given
+    dispatcher
+
+    // and contract
+    let contract = new Contract()
+
+    // and entryPoint
+    let entrypoint = new EntryPoint()
+    // and
+    let register = [{
+      serviceName: 'jaspeTest',
+      contract: contract,
+      entryPoint: entrypoint
+    }]
+
+    // when
+    dispatcher.use(register)
+
+    // then
+    expect(dispatcher.registry.size).toBe(1)
+    expect(dispatcher.registry.has('jaspeTest')).toBe(true)
+    expect(dispatcher.registry.get('jaspeTest').contract).toBe(contract)
+    expect(dispatcher.registry.get('jaspeTest').entryPoint).toBe(entrypoint)
+  })
+})

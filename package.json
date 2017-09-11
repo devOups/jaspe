@@ -6,6 +6,7 @@
   "main": "jaspe.js",
   "scripts": {
     "test": "jasmine",
+    "test-coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/jasmine",
     "eslint": "./node_modules/.bin/eslint ./src/"
   },
   "keywords": [
@@ -17,12 +18,14 @@
   "author": "quentin saieb <pitoux16+jaspe@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "codecov.io": "^0.1.6",
     "eslint": "^4.6.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "istanbul": "^0.4.5",
     "jasmine": "^2.7.0"
   }
 }

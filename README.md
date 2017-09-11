@@ -2,6 +2,7 @@
 Framework for NodeJs to design software component with contract paradigm
 
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/devOups/jaspe)
+[![Codecov](https://img.shields.io/codecov/c/github/codecov/example-python.svg)](https://codecov.io/gh/devOups/jaspe)
 
 [jaspe.slack.com](https://jaspe.slack.com)
 
