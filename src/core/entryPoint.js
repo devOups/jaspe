@@ -1,3 +1,5 @@
+'use strict'
+
 const EventEmitter = require('events')
 
 class EntryPoint extends EventEmitter {
@@ -11,7 +13,7 @@ class EntryPoint extends EventEmitter {
         }
       }
 
-      this.emit.apply(this, [service, ...params, callback])
+      this.emit.apply(this, [service, ...params, callback]) // eslint-disable-line
     })
   }
 }

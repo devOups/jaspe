@@ -1,4 +1,6 @@
-function parallel(tasks, callback) {
+'use strict'
+
+function parallel (tasks, callback) {
   let index = 0
   let completed = 0
   let results = []
@@ -10,17 +12,17 @@ function parallel(tasks, callback) {
   }
 
   for (; index < length; index++) {
-      tasks[index].call(null, (error, result) => {
-        if (error) {
-          errors.push(error)
-        } else {
-          results.push(result)
-        }
+    tasks[index].call(null, (error, result) => {
+      if (error) {
+        errors.push(error)
+      } else {
+        results.push(result)
+      }
 
-        if ((++completed === length)) {
-          callback(errors, results)
-        }
-      })
+      if ((++completed === length)) {
+        callback(errors, results)
+      }
+    })
   }
 }
 

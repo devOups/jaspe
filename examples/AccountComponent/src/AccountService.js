@@ -1,8 +1,6 @@
 const Account = require('./Account')
 
 class AccountService {
-  constructor () {}
-
   create (name, email, age, callback) {
     let account = new Account(name, email, age)
     callback(null, account)

@@ -1,10 +1,12 @@
+'use strict'
+
 const parallel = require('../src/parallel')
 
 describe('Testing parallel function', function () {
   it ('with valid params', function () {
     // given
     let call_order = []
-
+    
     // and a first task
     let task1 = (callback) => {
       setTimeout(() => {
@@ -24,18 +26,22 @@ describe('Testing parallel function', function () {
     // and third task
     let task3 = (callback) => {
       setTimeout(() => {
-          call_order.push(3)
-          callback(null, 3)
+        call_order.push(3)
+        callback(null, 3)
       }, 150)
     }
 
     // when run tasks in parallel
-    parallel([task1, task2, task3], (errors, results) => {
-      // then
-      expect(errors).toBe(null)
-      expect(results).toEqua([1 ,2 ,3])
-      expect(call_order).toEqua([1 ,2 ,3])
+    return new Promise((resolve, reject) => {
+      parallel([task1, task2, task3], (errors, results) => {
+        // then
+        expect(errors).toEqual([])
+        expect(results).toEqual([1, 2, 3])
+        expect(call_order).toEqual([1, 2, 3])
+        resolve()
+      })
     })
+
   })
   it ('with empty array', function () {
     // given an empty array
@@ -77,12 +83,15 @@ describe('Testing parallel function', function () {
     }
 
     // when
-    parallel([task1, task2, task3], (errors, results) => {
-      // then
-      expect(errors.length).toBe(2)
-      expect(results.length).toBe(1)
-      expect(results).toEqual([1])
-      expect(call_order).toEqua([1 ,2 ,3])
-    })
+    return new Promise((resolve, reject) => {
+      parallel([task1, task2, task3], (errors, results) => {
+        // then
+        expect(errors.length).toBe(2)
+        expect(results.length).toBe(1)
+        expect(results).toEqual([3])
+        expect(call_order).toEqual([1, 2, 3])
+        resolve()
+      })
+    })    
   })
 })

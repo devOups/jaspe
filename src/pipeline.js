@@ -1,3 +1,5 @@
+'use strict'
+
 const jaspe = require('./utils')
 
 var Pipeline = function (name, steps) {
@@ -20,7 +22,7 @@ var Pipeline = function (name, steps) {
 
 Pipeline.prototype.add = function (name, fn, args) {
   if (typeof fn !== 'function') {
-    throw 'fn has to be a Function'
+    throw new Error('fn has to be a Function')
   }
 
   this.steps.push({
@@ -30,20 +32,20 @@ Pipeline.prototype.add = function (name, fn, args) {
   })
 }
 
-Pipeline.prototype.run = function (param, callback) {
+Pipeline.prototype.run = function (value, callback) {
   if (typeof callback !== 'function') {
-    throw 'callback has to be a Function'
+    throw new Error('callback has to be a Function')
   }
   this.endOfPipeline = callback
-  this.next.call(this, null, param)
+  this.next(null, value)
 }
 
 Pipeline.prototype.next = function (err, param) {
   if (err) {
     err.message = (this.name || 'Contract error') + ' : ' + err.message
-    this.end.call(this, err, param)
+    this.end(err, param)
   } else if (this.currentStep >= this.steps.length) {
-    this.end.call(this, null, param)
+    this.end(null, param)
   } else {
     let step = this.steps[this.currentStep++]
     let stepArgs = []
@@ -60,4 +62,4 @@ Pipeline.prototype.end = function (err, result) {
   this.endOfPipeline.call(null, err, result)
 }
 
-module.exports = Pipeline;
+module.exports = Pipeline
