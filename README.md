@@ -4,7 +4,7 @@ Framework for NodeJs to design software component with contract paradigm
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/devOups/jaspe)
 [![Codecov](https://img.shields.io/codecov/c/github/codecov/example-python.svg)](https://codecov.io/gh/devOups/jaspe/branch/master)
 
-[jaspe.slack.com](https://jaspe.slack.com)
+[Public Discord](https://discord.gg/n2hkjgq)
 
 ## Installation
 ```bash
@@ -238,6 +238,8 @@ For example, age parameter must be an integer and not null and must be between 0
 > * validator: is the function to validate value.
 > * params: is parameters are injected when de validator is called.
 
+
+**Into next Jaspe release you can describe contract in contract.json file and a script will build a contract.js file and more**
 
 # How to create a component with Jaspe
 
