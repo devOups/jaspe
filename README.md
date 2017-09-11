@@ -1,3 +1,6 @@
+![Jaspe Logo](https://raw.githubusercontent.com/devOups/jaspe/master/img/jaspe-logo.png)
+
+
 # Jaspe
 Framework for NodeJs to design software component with contract paradigm
 
