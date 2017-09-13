@@ -1,3 +1,9 @@
+/*!
+ * Jaspe
+ * Copyright(c) 2017 Quentin SAIEB
+ * MIT Licensed
+ */
+
 'use strict'
 
 const Contract = require('./contract')

@@ -243,6 +243,26 @@ For example, age parameter must be an integer and not null and must be between 0
 
 
 **Into next Jaspe release you can describe contract in contract.json file and a script will build a contract.js file and more**
+Preview of contract.json file
+```json
+	"services": [{
+		"name": "CREATE",
+		"requirements": [{
+			"username": {
+				"typeOf": "String",
+				"constraints": ["@notNull", "@notEmpty"]
+			},
+			"email": {
+				"typeOf": "String",
+				"constraints": ["@notNull", "@notEmpty", "@email"]
+			},
+			"age": {
+				"typeOf": "Number",
+				"constraints": ["@notNull", "@range(0, 110)"]
+			}
+		}]
+	}, [...]
+```
 
 # How to create a component with Jaspe
 
