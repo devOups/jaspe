@@ -1,16 +1,16 @@
 'use strict'
 
-const Pipeline = require('../src/pipeline');
+const Pipeline = require('../../src/core/pipeline');
 
-describe("Pipeline class - Testing constructor", function () {
-  it ("with default valid params", function () {
+describe('Pipeline class - Testing constructor', function () {
+  it ('with default valid params', function () {
     // given
     let pipeline = new Pipeline()
 
     // then
-    expect(pipeline.currentStep).toBe(0);
-    expect(pipeline.name).toBe('');
-    expect(pipeline.steps).toEqual([]);
+    expect(pipeline.currentStep).toBe(0)
+    expect(pipeline.name).toBe('')
+    expect(pipeline.steps).toEqual([])
   });
   it ("with defined name", function () {
     // given

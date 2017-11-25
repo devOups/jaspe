@@ -5,7 +5,7 @@
  */
 'use strict'
 
-const jaspe = require('./utils')
+const jaspe = require('../utils')
 
 class Pipeline {
   constructor (name, steps) {
