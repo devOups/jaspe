@@ -8,6 +8,7 @@
 
 const Contract = require('./contract')
 const EntryPoint = require('./entryPoint')
+const JaspeError = require('../exception/jaspeError.js')
 
 class Dispatcher {
   constructor () {
@@ -17,14 +18,18 @@ class Dispatcher {
   dispatch (serviceName, service, params) {
     return new Promise((resolve, reject) => {
       if (!this.isAlreadyRegister(serviceName)) {
-        reject(new Error('service name: ' + serviceName + ' is not register'))
+        reject(new JaspeError({
+          code: 'ServiceNotFound',
+          from: 'Dispatcher class - dispatch method',
+          message: `service name: ${serviceName} is not register`
+        }))
       } else {
         let component = this.registry.get(serviceName)
         component.contract.check(service, params)
           .then((validParams) => {
             component.entryPoint.invoke(service, validParams)
-              .then(resolve).catch(reject)
           })
+          .then(resolve)
           .catch(reject)
       }
     })
@@ -32,19 +37,35 @@ class Dispatcher {
 
   register (serviceName, contract, entryPoint) {
     if (!serviceName) {
-      throw new Error('serviceName must be not null undefined or empty string')
+      throw new JaspeError({
+        code: 'InvalidParameter',
+        from: 'Dispatcher class - register method',
+        message: 'serviceName must be not null undefined or empty string'
+      })
     }
 
     if (this.isAlreadyRegister(serviceName)) {
-      throw new Error('service with the same name already register')
+      throw new JaspeError({
+        code: 'InvalidParameter',
+        from: 'Dispatcher class - register method',
+        message: 'service with the same name already register'
+      })
     }
 
     if (!(contract instanceof Contract)) {
-      throw new Error('contract must be a Contract instance')
+      throw new JaspeError({
+        code: 'InvalidParameter',
+        from: 'Dispatcher class - register method',
+        message: 'contract must be a Contract instance'
+      })
     }
 
     if (!(entryPoint instanceof EntryPoint)) {
-      throw new Error('entryPoint must be a EntryPoint instance')
+      throw new JaspeError({
+        code: 'InvalidParameter',
+        from: 'Dispatcher class - register method',
+        message: 'entryPoint must be a EntryPoint instance'
+      })
     }
 
     this.registry.set(serviceName, {contract, entryPoint})

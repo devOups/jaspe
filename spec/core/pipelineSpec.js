@@ -1,6 +1,7 @@
 'use strict'
 
-const Pipeline = require('../../src/core/pipeline');
+const Pipeline = require('../../src/core/pipeline')
+const JaspeError = require('../../src/exception/jaspeError')
 
 describe('Pipeline class - Testing constructor', function () {
   it ('with default valid params', function () {
@@ -68,7 +69,7 @@ describe('Pipeline class - Testing add method', function () {
     }
 
     // then
-    expect(thrown).toThrowError('fn has to be a Function')
+    expect(thrown).toThrowError(JaspeError, 'fn has to be a Function')
   })
 })
 describe('Pipeline class - Testing run method', function () {
@@ -85,7 +86,7 @@ describe('Pipeline class - Testing run method', function () {
     }
 
     // then
-    expect(thrown).toThrowError('callback has to be a Function')
+    expect(thrown).toThrowError(JaspeError, 'callback has to be a Function')
   })
   it ('with valid params', function () {
     // given
@@ -109,7 +110,7 @@ describe('Pipeline class - Testing run method', function () {
   })
 })
 describe('Pipeline class - Testing next method', function () {
-  it ('without step and error', function () {
+  it('without step and error', function () {
     // given
     let pipeline = new Pipeline();
 
@@ -120,11 +121,11 @@ describe('Pipeline class - Testing next method', function () {
     pipeline.next()
 
     // then
-    expect(pipeline.end).toHaveBeenCalled();
-    expect(pipeline.end.calls.count()).toEqual(1);
-    expect(pipeline.end.calls.argsFor(0)).toEqual([null, undefined]);
+    expect(pipeline.end).toHaveBeenCalled()
+    expect(pipeline.end.calls.count()).toEqual(1)
+    expect(pipeline.end.calls.argsFor(0)).toEqual([null, undefined])
   })
-  it ('with error and no step', function () {
+  it('with error and no step', function () {
     // given
     let pipeline = new Pipeline()
 
@@ -138,10 +139,10 @@ describe('Pipeline class - Testing next method', function () {
     pipeline.next(error)
 
     // then
-    expect(pipeline.end).toHaveBeenCalled();
-    expect(pipeline.end.calls.count()).toEqual(1);
-    expect(pipeline.end.calls.argsFor(0)).toEqual([error, undefined]);
-    expect(error.message).toBe('Contract error : test failed');
+    expect(pipeline.end).toHaveBeenCalled()
+    expect(pipeline.end.calls.count()).toEqual(1)
+    expect(pipeline.end.calls.argsFor(0)).toEqual([error, undefined])
+    expect(error.message).toBe('Contract error : test failed')
   })
   it ('with error and one step', function () {
     // given

@@ -9,6 +9,7 @@
 const Pipeline = require('./pipeline')
 const parallel = require('../parallel')
 const each = require('../each')
+const JaspeError = require('../exception/jaspeError.js')
 
 class Contract {
   constructor (name, services) {
@@ -18,15 +19,27 @@ class Contract {
 
   register (service, requirements) {
     if (!service) {
-      throw new Error('service must be not null undefined or empty string')
+      throw new JaspeError({
+        code: 'InvalidParameter',
+        from: 'Contract class - register method',
+        message: 'service must be not null undefined or empty string'
+      })
     }
 
     if (this.isAlreadyRegister(service)) {
-      throw new Error('service: ' + service + ' with the same name already register')
+      throw new JaspeError({
+        code: 'InvalideParameter',
+        from: 'Contract class - register method',
+        message: `service: ${service} already register`
+      })
     }
 
     if (!(requirements instanceof Map)) {
-      throw new Error('requirements must be a Map instance')
+      throw new JaspeError({
+        code: 'InvalidParameter',
+        from: 'Contract class - register method',
+        message: 'requirements must be a Map instance'
+      })
     }
 
     this.services.set(service, requirements)
@@ -39,7 +52,11 @@ class Contract {
   check (service, params) {
     return new Promise((resolve, reject) => {
       if (!this.isAlreadyRegister(service)) {
-        reject(new Error('service: ' + service + ' is not register'))
+        reject(new JaspeError({
+          code: 'ServiceNotFound',
+          from: 'Contract class - check method',
+          message: `service: ${service} is not register`
+        }))
       } else {
         let requirements = this.services.get(service)
         each(requirements, (nameOfParam, requirement, next) => {

@@ -3,8 +3,9 @@
 const Contract = require('../../src/core/contract')
 const dispatcher = require('../../src/core/dispatcher')
 const EntryPoint = require('../../src/core/entryPoint')
+const JaspeError = require('../../src/exception/jaspeError.js')
 
-describe("Dispatcher class - Testing constructor", function () {
+describe('Dispatcher class - Testing constructor', function () {
   it ("with default valid params", function () {
     // given
     dispatcher
@@ -31,7 +32,7 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrowError('serviceName must be not null undefined or empty string')
+    expect(thrown).toThrowError(JaspeError, 'serviceName must be not null undefined or empty string')
   })
   it ("with undefined service name", function () {
     // given
@@ -49,7 +50,7 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrowError('serviceName must be not null undefined or empty string')
+    expect(thrown).toThrowError(JaspeError, 'serviceName must be not null undefined or empty string')
   })
   it ("with empty service name", function () {
     // given
@@ -67,7 +68,7 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrowError('serviceName must be not null undefined or empty string')
+    expect(thrown).toThrowError(JaspeError, 'serviceName must be not null undefined or empty string')
   })
   it ("with service name already register", function () {
     // given
@@ -88,9 +89,9 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrowError('service with the same name already register')
+    expect(thrown).toThrowError(JaspeError, 'service with the same name already register')
   })
-  it ("with invalid param contract", function () {
+  it ('with invalid param contract', function () {
     // given
     dispatcher
 
@@ -109,9 +110,9 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrowError('contract must be a Contract instance')
+    expect(thrown).toThrowError(JaspeError, 'contract must be a Contract instance')
   })
-  it ("with invalid param entryPoint", function () {
+  it ('with invalid param entryPoint', function () {
     // given
     dispatcher
 
@@ -133,9 +134,9 @@ describe('Dispatcher class - Testing register method', function () {
     }
     
     // then
-    expect(thrown).toThrowError('entryPoint must be a EntryPoint instance')
+    expect(thrown).toThrowError(JaspeError, 'entryPoint must be a EntryPoint instance')
   })
-  it ("with valid params", function () {
+  it ('with valid params', function () {
     // given
     dispatcher
     
@@ -224,6 +225,8 @@ describe('Dispatcher class - Testing dispatch method', function () {
     })
     .catch(function (err) {
       expect(err.message).toBe('service name: ' + serviceName + ' is not register')
+      expect(err.code).toBe('ServiceNotFound')
+      expect(err.from).toBe('Dispatcher class - dispatch method')
     })
   })
   it ('with the service name in register', function () {

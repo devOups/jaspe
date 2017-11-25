@@ -6,6 +6,7 @@
 'use strict'
 
 const jaspe = require('../utils')
+const JaspeError = require('../exception/jaspeError')
 
 class Pipeline {
   constructor (name, steps) {
@@ -28,7 +29,11 @@ class Pipeline {
 
   add (name, fn, args) {
     if (typeof fn !== 'function') {
-      throw new Error('fn has to be a Function')
+      throw new JaspeError({
+        code: 'InvalidParameter',
+        from: 'Pipeline class - add method',
+        message: 'fn has to be a Function'
+      })
     }
 
     this.steps.push({
@@ -40,7 +45,11 @@ class Pipeline {
 
   run (value, callback) {
     if (typeof callback !== 'function') {
-      throw new Error('callback has to be a Function')
+      throw new JaspeError({
+        code: 'InvalidParameter',
+        from: 'Pipeline class - run method',
+        message: 'callback has to be a Function'
+      })
     }
     this.endOfPipeline = callback
     this.next(null, value)
