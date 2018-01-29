@@ -1,7 +1,11 @@
 {
     "env": {
         "node": true,
-        "es6": true
+        "es6": true,
+        "jasmine": true
     },
+    "plugins": [
+        "jasmine"
+    ],
     "extends": "standard"
 }
