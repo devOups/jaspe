@@ -9,7 +9,8 @@
 const Pipeline = require('./pipeline')
 const parallel = require('../parallel')
 const each = require('../each')
-const JaspeError = require('../exception/jaspeError.js')
+const JaspeError = require('../exception/jaspeError')
+const ContractError = require('../exception/ContractError')
 
 class Contract {
   constructor (name, services) {
@@ -70,9 +71,13 @@ class Contract {
             return reject(err)
           }
           // when all pipelines are built, run them
-          parallel(pipelines, (err, data) => {
-            if (err.length !== 0) {
-              reject(err)
+          parallel(pipelines, (errors, data) => {
+            if (errors.length !== 0) {
+              reject(new ContractError({
+                code: 'ContractError',
+                serviceName: service,
+                errors
+              }))
             } else {
               resolve(data)
             }

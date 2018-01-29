@@ -3,7 +3,9 @@
 const Contract = require('../../src/core/contract')
 const dispatcher = require('../../src/core/dispatcher')
 const EntryPoint = require('../../src/core/entryPoint')
-const JaspeError = require('../../src/exception/jaspeError.js')
+const JaspeError = require('../../src/exception/jaspeError')
+const ContractError = require('../../src/exception/ContractError')
+const DispatcherError = require('../../src/exception/DispatcherError')
 
 describe('Dispatcher class - Testing constructor', function () {
   it ("with default valid params", function () {
@@ -282,6 +284,46 @@ describe('Dispatcher class - Testing dispatch method', function () {
       expect(entryPoint.invoke).toHaveBeenCalled()
       expect(entryPoint.invoke.calls.count()).toEqual(1)
       expect(entryPoint.invoke.calls.argsFor(0)).toEqual([service, undefined])
+    })
+  })
+  it ('with the service name in register and contract.check reject promise', function () {
+    // given
+    dispatcher
+
+    // and service name
+    let serviceName = 'serviceName'
+
+    // and service
+    let service = 'create'
+
+    // and create contract
+    // and mock check method
+    let contract = new Contract()
+    spyOn(contract, 'check').and.returnValue(Promise.reject(new ContractError({code: 'ContractError', serviceName: service})));
+  
+    // and mock isAlreadyRegister
+    spyOn(dispatcher, 'isAlreadyRegister').and.returnValue(true)
+
+    // and mock return of registry.get
+    spyOn(dispatcher.registry, 'get').and.returnValue({contract})
+
+    // when
+    return new Promise((resolve, reject) => {
+      dispatcher.dispatch(serviceName, service)
+      .catch(reject)
+    })
+    .catch((dispatcherError) => {
+      // then
+      expect(contract.check).toHaveBeenCalled()
+      expect(contract.check.calls.count()).toEqual(1)
+      expect(contract.check.calls.argsFor(0)).toEqual([service, undefined])
+      
+      // and
+      expect(dispatcherError instanceof DispatcherError).toBe(true)
+      expect(dispatcherError.contractError instanceof ContractError).toBe(true)
+      expect(dispatcherError.message).toBe(
+        `Impossible to invoke ${service} of the ${serviceName}, because contract is not respected`
+      )
     })
   })
 })

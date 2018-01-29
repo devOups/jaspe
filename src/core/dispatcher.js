@@ -8,7 +8,8 @@
 
 const Contract = require('./contract')
 const EntryPoint = require('./entryPoint')
-const JaspeError = require('../exception/jaspeError.js')
+const JaspeError = require('../exception/jaspeError')
+const DispatcherError = require('../exception/DispatcherError')
 
 class Dispatcher {
   constructor () {
@@ -26,11 +27,16 @@ class Dispatcher {
       } else {
         let component = this.registry.get(serviceName)
         component.contract.check(service, params)
-          .then((validParams) => {
-            component.entryPoint.invoke(service, validParams)
-          })
-          .then(resolve)
-          .catch(reject)
+        .then((validParams) => component.entryPoint.invoke(service, validParams))
+        .then(resolve)
+        .catch((contractError) => {
+          reject(
+            new DispatcherError({
+              componentName: serviceName,
+              contractError
+            })
+          )
+        })
       }
     })
   }

@@ -1,6 +1,7 @@
 'use strict'
 
-const JaspeError = require('../../src/exception/jaspeError.js')
+const JaspeError = require('../../src/exception/jaspeError')
+const ContractError = require('../../src/exception/ContractError')
 const Contract = require('../../src/core/contract')
 const v = require('../../src/validator')
 
@@ -209,7 +210,7 @@ describe('Contract class - Testing check method', function () {
       expect(result).toEqual([username, email])
     })
   })
-  it('with valid invalid params', function () {
+  it('with invalid params', function () {
     // given
     let contract = new Contract()
 
@@ -268,11 +269,14 @@ describe('Contract class - Testing check method', function () {
       contract.check(service, {username, email})
       .catch(reject)
     })
-    .catch(function (err) {
+    .catch(function (contractError) {
       // then
-      expect(err.length).toBe(2)
-      expect(err[0].message).toEqual('username : value have to be not empty')
-      expect(err[1].message).toEqual('email : value have to match with pattern')
+      expect(contractError instanceof ContractError).toBe(true)
+      expect(contractError.code).toBe('ContractError')
+      expect(contractError.message).toBe(`Invoke ${service} service provides by a component with invalid parameters`)
+      expect(contractError.errors.length).toBe(2)
+      expect(contractError.errors[0].message).toEqual('username : value have to be not empty')
+      expect(contractError.errors[1].message).toEqual('email : value have to match with pattern')
     })
   })
 })
