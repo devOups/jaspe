@@ -7,9 +7,9 @@
 'use strict'
 
 function each (map, make, callback) {
-  let length = map.size
-  let results = []
-  let errors = []
+  const length = map.size
+  const results = []
+  const errors = []
   let completed = 0
 
   map.forEach((value, key) => {
