@@ -1,6 +1,6 @@
 /*!
  * Jaspe
- * Copyright(c) 2017 Quentin SAIEB
+ * Copyright(c) 2017 - 2018 Quentin SAIEB
  * MIT Licensed
  */
 'use strict'
