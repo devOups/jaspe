@@ -1,7 +1,7 @@
 {
   "name": "jaspe",
-  "version": "1.0.2",
-  "description": "Framework for NodeJs to design component with contract model",
+  "version": "1.1.2",
+  "description": "Framework Js to design component with contract model",
   "repository": "https://github.com/devOups/jaspe",
   "main": "jaspe.js",
   "scripts": {
@@ -22,6 +22,7 @@
     "eslint": "^4.6.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jasmine": "^2.9.1",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",

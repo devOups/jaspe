@@ -1,5 +1,7 @@
 'use strict'
 
+const JaspeError = require('../../src/exception/jaspeError')
+const ContractError = require('../../src/exception/ContractError')
 const Contract = require('../../src/core/contract')
 const v = require('../../src/validator')
 
@@ -48,8 +50,8 @@ describe('Contract class - Testing isAlreadyRegister method', function () {
 })
 
 describe('Contract class - Testing register method', function () {
-  it ('with service already register', function () {
-     // given
+  it('with service already register', function () {
+    // given
     let contract = new Contract()
 
     // and a service
@@ -64,9 +66,9 @@ describe('Contract class - Testing register method', function () {
     }
 
     // then
-    expect(thrown).toThrowError('service must be not null undefined or empty string')    
+    expect(thrown).toThrowError(JaspeError, 'service must be not null undefined or empty string')    
   })
-  it ('with service already register', function () {
+  it('with service already register', function () {
      // given
     let contract = new Contract()
 
@@ -82,7 +84,7 @@ describe('Contract class - Testing register method', function () {
     }
 
     // then
-    expect(thrown).toThrowError('service: ' + service + ' with the same name already register')    
+    expect(thrown).toThrowError(JaspeError, `service: ${service} already register`)
   })
   it ('with requirements of the service is not map instance', function () {
     // given
@@ -97,7 +99,7 @@ describe('Contract class - Testing register method', function () {
     }
 
     // then
-    expect(thrown).toThrowError('requirements must be a Map instance')
+    expect(thrown).toThrowError(JaspeError, 'requirements must be a Map instance')
   })
   it ('with valid params', function () {
     // given
@@ -140,6 +142,7 @@ describe('Contract class - Testing check method', function () {
     })
     .catch(function (err) {
       expect(err.message).toBe('service: ' + service + ' is not register')
+      expect(err.from).toBe('Contract class - check method')
     })
   })
   it('with valid param', function () {
@@ -207,7 +210,7 @@ describe('Contract class - Testing check method', function () {
       expect(result).toEqual([username, email])
     })
   })
-  it('with valid invalid params', function () {
+  it('with invalid params', function () {
     // given
     let contract = new Contract()
 
@@ -266,11 +269,14 @@ describe('Contract class - Testing check method', function () {
       contract.check(service, {username, email})
       .catch(reject)
     })
-    .catch(function (err) {
+    .catch(function (contractError) {
       // then
-      expect(err.length).toBe(2)
-      expect(err[0].message).toEqual('username : value have to be not empty')
-      expect(err[1].message).toEqual('email : value have to match with pattern')
+      expect(contractError instanceof ContractError).toBe(true)
+      expect(contractError.code).toBe('ContractError')
+      expect(contractError.message).toBe(`Invoke ${service} service provides by a component with invalid parameters`)
+      expect(contractError.errors.length).toBe(2)
+      expect(contractError.errors[0].message).toEqual('username : value have to be not empty')
+      expect(contractError.errors[1].message).toEqual('email : value have to match with pattern')
     })
   })
 })

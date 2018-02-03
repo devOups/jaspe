@@ -11,6 +11,11 @@ let typeOf = function (value, typeRef, callback) {
     ? callback(null, value)
     : callback(new Error('value have to be a ' + typeRef))
 }
+let isString = function (value, callback) {
+  typeof value === 'string'
+    ? callback(null, value)
+    : callback(new Error('value have to be a string'))
+}
 let isArray = function (value, callback) {
   Array.isArray(value)
     ? callback(null, value)
@@ -67,6 +72,7 @@ let objectId = function (value, callback) {
 
 module.exports = {
   typeOf: typeOf,
+  isString: isString,
   isInteger: isInteger,
   isArray: isArray,
   notNull: notNull,

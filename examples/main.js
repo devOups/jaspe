@@ -12,7 +12,7 @@ try {
 
 let params = {
   username: 'quentin',
-  email: 'quentinsaieb@hotmail.fr',
+  email: 'quentinsaiehotmail.fr',
   age: 24
 }
 
@@ -21,8 +21,7 @@ dispatcher.dispatch('AccountService', 'create', params)
   console.log(account)
 })
 .catch(function (err) {
-  console.log('***')
-  console.log(err)
+  console.log(err.contractError.toString())
 })
 
 dispatcher.dispatch('AccountService', 'delete', {accountId: '45'})
