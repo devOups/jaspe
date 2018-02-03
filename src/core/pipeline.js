@@ -5,7 +5,6 @@
  */
 'use strict'
 
-const jaspe = require('../utils')
 const JaspeError = require('../exception/jaspeError')
 
 class Pipeline {
@@ -16,18 +15,19 @@ class Pipeline {
 
     if (steps) {
       let index = 0
-      let length = steps.length
-      for (; index < length; index++) {
+      const length = steps.length
+      while (index < length) {
         this.add(
           steps[index].name,
           steps[index].validator,
           steps[index].params
         )
+        ++index
       }
     }
   }
 
-  add (name, fn, args) {
+  add (name, fn, params) {
     if (typeof fn !== 'function') {
       throw new JaspeError({
         code: 'InvalidParameter',
@@ -36,11 +36,7 @@ class Pipeline {
       })
     }
 
-    this.steps.push({
-      name: name,
-      fn: fn,
-      args: args
-    })
+    this.steps.push({name, fn, params})
   }
 
   run (value, callback) {
@@ -55,26 +51,26 @@ class Pipeline {
     this.next(null, value)
   }
 
-  next (err, param) {
+  next (err, value) {
     if (err) {
       err.message = (this.name || 'Contract error') + ' : ' + err.message
-      this.end(err, param)
+      this.end(err, value)
     } else if (this.currentStep >= this.steps.length) {
-      this.end(null, param)
+      this.end(null, value)
     } else {
-      let step = this.steps[this.currentStep++]
-      let stepArgs = []
-      if (step.args !== undefined) {
-        stepArgs = jaspe.arrayFromObject(step.args)
-      }
-      let args = [param, ...stepArgs, this.next.bind(this)]
-
-      jaspe.apply(step.fn, null, args)
+      const step = this.steps[this.currentStep++]
+      const done = (err, result) => this.next(err, result)
+      step.params !== undefined
+        ? step.fn(value, step.params, done)
+        : step.fn(value, done)
     }
   }
 
-  end (err, result) {
-    this.endOfPipeline.call(null, err, result)
+  end (err, value) {
+    // es2015 computed property names is very slow...
+    const result = {}
+    result[this.name] = value
+    this.endOfPipeline(err, result)
   }
 }
 
