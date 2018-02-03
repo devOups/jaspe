@@ -27,16 +27,16 @@ class Dispatcher {
       } else {
         let component = this.registry.get(serviceName)
         component.contract.check(service, params)
-        .then((validParams) => component.entryPoint.invoke(service, validParams))
-        .then(resolve)
-        .catch((contractError) => {
-          reject(
-            new DispatcherError({
-              componentName: serviceName,
-              contractError
-            })
-          )
-        })
+          .then((validParams) => component.entryPoint.invoke(service, validParams))
+          .then(resolve)
+          .catch((contractError) => {
+            reject(
+              new DispatcherError({
+                componentName: serviceName,
+                contractError
+              })
+            )
+          })
       }
     })
   }

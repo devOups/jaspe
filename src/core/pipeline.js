@@ -68,7 +68,7 @@ class Pipeline {
         stepArgs = jaspe.arrayFromObject(step.args)
       }
       let args = [param, ...stepArgs, this.next.bind(this)]
-  
+
       jaspe.apply(step.fn, null, args)
     }
   }
