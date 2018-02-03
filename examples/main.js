@@ -6,14 +6,14 @@ try {
   dispatcher.use(register)
 } catch (err) {
   console.log(err)
-  
-  return
+
+  process.exit()
 }
 
 let params = {
   username: 'quentin',
-  email: 'quentinsaiehotmail.fr',
-  age: 24
+  email: 'pitoux16+jaspe@gmail.com',
+  age: 25
 }
 
 dispatcher.dispatch('AccountService', 'create', params)

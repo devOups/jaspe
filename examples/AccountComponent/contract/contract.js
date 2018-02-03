@@ -29,7 +29,7 @@ createRequirements.set('email', [
     validator: v.typeOf,
     params: {typeOf: 'string'}
   },
-    {
+  {
     name: 'notNull',
     validator: v.notNull
   },
@@ -82,6 +82,5 @@ deleteRequirements.set('accountId', [
   }
 ])
 services.set('delete', deleteRequirements)
-
 
 module.exports = new Contract('AccountContract', services)
