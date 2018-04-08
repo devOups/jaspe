@@ -1,15 +1,15 @@
 /*!
  * Jaspe
- * Copyright(c) 2017 Quentin SAIEB
+ * Copyright(c) 2017 - 2018 Quentin SAIEB
  * MIT Licensed
  */
 
 'use strict'
 
-let typeOf = function (value, typeRef, callback) {
-  typeof value === typeRef // eslint-disable-line
+let typeOf = function (value, {typeOf}, callback) {
+  typeof value === typeOf // eslint-disable-line
     ? callback(null, value)
-    : callback(new Error('value have to be a ' + typeRef))
+    : callback(new Error('value have to be a ' + typeOf))
 }
 let isString = function (value, callback) {
   typeof value === 'string'
@@ -41,47 +41,47 @@ let notEmpty = function (value, callback) {
     ? callback(null, value)
     : callback(new Error('value have to be not empty'))
 }
-let min = function (value, min, callback) {
+let min = function (value, {min}, callback) {
   value >= min
     ? callback(null, value)
     : callback(new Error('value have to be >= ' + min))
 }
-let max = function (value, max, callback) {
+let max = function (value, {max}, callback) {
   value <= max
     ? callback(null, value)
     : callback(new Error('value have to be <= ' + max))
 }
-let range = function (value, min, max, callback) {
+let range = function (value, {min, max}, callback) {
   (value >= min) && (value <= max)
     ? callback(null, value)
     : callback(new Error('value have to be >= ' + min + ' and >= ' + max))
 }
-let pattern = function (value, regexObj, callback) {
-  regexObj.test(value)
+let pattern = function (value, {regex}, callback) {
+  regex.test(value)
     ? callback(null, value)
     : callback(new Error('value have to match with pattern'))
 }
 let email = function (value, callback) {
   var regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  pattern(value, regex, callback)
+  pattern(value, {regex}, callback)
 }
 let objectId = function (value, callback) {
   var regex = /^[a-f\d]{24}$/i
-  pattern(value, regex, callback)
+  pattern(value, {regex}, callback)
 }
 
 module.exports = {
-  typeOf: typeOf,
-  isString: isString,
-  isInteger: isInteger,
-  isArray: isArray,
-  notNull: notNull,
-  notEmpty: notEmpty,
-  isNull: isNull,
-  min: min,
-  max: max,
-  range: range,
-  pattern: pattern,
-  email: email,
-  objectId: objectId
+  typeOf,
+  isString,
+  isInteger,
+  isArray,
+  notNull,
+  notEmpty,
+  isNull,
+  min,
+  max,
+  range,
+  pattern,
+  email,
+  objectId
 }

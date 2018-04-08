@@ -4,7 +4,7 @@ const Pipeline = require('../../src/core/pipeline')
 const JaspeError = require('../../src/exception/jaspeError')
 
 describe('Pipeline class - Testing constructor', function () {
-  it ('with default valid params', function () {
+  it('with default valid params', function () {
     // given
     let pipeline = new Pipeline()
 
@@ -12,8 +12,8 @@ describe('Pipeline class - Testing constructor', function () {
     expect(pipeline.currentStep).toBe(0)
     expect(pipeline.name).toBe('')
     expect(pipeline.steps).toEqual([])
-  });
-  it ("with defined name", function () {
+  })
+  it('with defined name', function () {
     // given
     let pipeline = new Pipeline('pipeline')
 
@@ -21,7 +21,7 @@ describe('Pipeline class - Testing constructor', function () {
     expect(pipeline.currentStep).toBe(0);
     expect(pipeline.name).toBe('pipeline');
     expect(pipeline.steps).toEqual([]);
-  });
+  })
   it ("with defined name and steps", function () {
     // given initial steps
     let fn = () => {}
@@ -43,22 +43,22 @@ describe('Pipeline class - Testing constructor', function () {
     expect(pipeline.steps[0].fn).toBe(fn)
     expect(pipeline.steps[0].params).toBe(undefined)
   });
-});
+})
 describe('Pipeline class - Testing add method', function () {
-  it ('with valid params', function () {
+  it('with valid params', function () {
     // given
     let pipeline = new Pipeline()
     let fn = function () {}
-    let args = {min: 0, max: 10}
+    let params = {min: 0, max: 10}
 
     // when
-    pipeline.add('P1', fn, args)
+    pipeline.add('P1', fn, params)
 
     // then
     expect(pipeline.steps.length).toEqual(1)
-    expect(pipeline.steps[0]).toEqual({name: 'P1', fn: fn, args: args})
+    expect(pipeline.steps[0]).toEqual({name: 'P1', fn, params})
   })
-  it ('with fn param is not a Function', function () {
+  it('with fn param is not a Function', function () {
     // given
     let pipeline = new Pipeline()
     let fn = []
@@ -73,7 +73,7 @@ describe('Pipeline class - Testing add method', function () {
   })
 })
 describe('Pipeline class - Testing run method', function () {
-  it ('with callback param is not a Function', function () {
+  it('with callback param is not a Function', function () {
     // given
     let pipeline = new Pipeline()
 
@@ -88,7 +88,7 @@ describe('Pipeline class - Testing run method', function () {
     // then
     expect(thrown).toThrowError(JaspeError, 'callback has to be a Function')
   })
-  it ('with valid params', function () {
+  it('with valid params', function () {
     // given
     let pipeline = new Pipeline()
 
@@ -144,7 +144,7 @@ describe('Pipeline class - Testing next method', function () {
     expect(pipeline.end.calls.argsFor(0)).toEqual([error, undefined])
     expect(error.message).toBe('Contract error : test failed')
   })
-  it ('with error and one step', function () {
+  it('with error and one step', function () {
     // given
     let pipeline = new Pipeline()
 
@@ -173,7 +173,7 @@ describe('Pipeline class - Testing next method', function () {
     expect(pipeline.end.calls.argsFor(0)).toEqual([error, 1]);
     expect(error.message).toBe('Contract error : test failed');
   })
-  it ('with one step without args', function () {
+  it('with one step without args', function () {
     // given
     let pipeline = new Pipeline();
 
@@ -196,20 +196,22 @@ describe('Pipeline class - Testing next method', function () {
     expect(step.fn.calls.argsFor(0))
       .toEqual([1, jasmine.any(Function)]);
   })
-  it ('with one step with args', function () {
+  it('with one step with args', function () {
     // given
     let pipeline = new Pipeline();
 
     // and : one step and mock step.fn function
+    const min = 0
+    const max = 10
     let step = {
-        name: 'S1',
-        fn: function () {},
-        args: {min: 0, max: 10}
+      name: 'S1',
+      fn: function () {},
+      params: {min, max}
     }
     spyOn(step, 'fn')
 
     // and : add step
-    pipeline.steps.push(step);
+    pipeline.steps.push(step)
 
     // when
     pipeline.next(null, 1)
@@ -218,11 +220,11 @@ describe('Pipeline class - Testing next method', function () {
     expect(step.fn).toHaveBeenCalled();
     expect(step.fn.calls.count()).toEqual(1);
     expect(step.fn.calls.argsFor(0))
-      .toEqual([1, 0, 10, jasmine.any(Function)]);
+      .toEqual([1, {min, max}, jasmine.any(Function)]);
   })
 })
 describe('Pipeline class - Testing end method', function () {
-  it ('with valid params', function () {
+  it('with valid params', function () {
     // given
     let pipeline = new Pipeline()
 
@@ -237,6 +239,6 @@ describe('Pipeline class - Testing end method', function () {
     expect(pipeline.endOfPipeline).toHaveBeenCalled()
     expect(pipeline.endOfPipeline.calls.count()).toEqual(1)
     expect(pipeline.endOfPipeline.calls.argsFor(0))
-      .toEqual([undefined, undefined])
+      .toEqual([undefined, {'': undefined}])
   })
 })

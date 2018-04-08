@@ -1,3 +1,11 @@
+/*!
+ * Jaspe
+ * Copyright(c) 2018 Quentin SAIEB
+ * MIT Licensed
+ */
+
+'use strict'
+
 class DispatcherError extends Error {
   constructor ({code, componentName, contractError = {}}) {
     super(`Impossible to invoke ${contractError.serviceName} of the ${componentName}, because contract is not respected`)

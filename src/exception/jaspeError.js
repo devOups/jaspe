@@ -1,3 +1,11 @@
+/*!
+ * Jaspe
+ * Copyright(c) 2018 Quentin SAIEB
+ * MIT Licensed
+ */
+
+'use strict'
+
 class JaspeError extends Error {
   constructor ({code, from, message}) {
     super(message || code)

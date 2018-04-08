@@ -9,7 +9,7 @@ describe('DispatcherError class - Testing constructor', function () {
     const code = 'DispatcherError'
 
     // and componentName
-    const componentName = undefined;
+    const componentName = undefined
 
     // and contractError
     const contractError = {}
@@ -19,7 +19,7 @@ describe('DispatcherError class - Testing constructor', function () {
 
     // then
     expect(dispatcherError.code).toBe(code)
-    expect(dispatcherError.componentName).toBe(undefined)
+    expect(dispatcherError.componentName).toBe(componentName)
     expect(dispatcherError.contractError).toEqual(contractError)
     expect(dispatcherError.message).toBe(
       'Impossible to invoke undefined of the undefined, because contract is not respected'

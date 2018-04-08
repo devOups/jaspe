@@ -1,6 +1,6 @@
 /*!
  * Jaspe
- * Copyright(c) 2017 Quentin SAIEB
+ * Copyright(c) 2017 - 2018 Quentin SAIEB
  * MIT Licensed
  */
 
@@ -59,7 +59,7 @@ class Contract {
           message: `service: ${service} is not register`
         }))
       } else {
-        let requirements = this.services.get(service)
+        const requirements = this.services.get(service)
         each(requirements, (nameOfParam, requirement, next) => {
           // for each item in requirements
           let p = new Pipeline(nameOfParam, requirement)

@@ -1,6 +1,6 @@
 /*!
  * Jaspe
- * Copyright(c) 2017 Quentin SAIEB
+ * Copyright(c) 2017 - 2018 Quentin SAIEB
  * MIT Licensed
  */
 
@@ -19,10 +19,9 @@ class EntryPoint extends EventEmitter {
         }
       }
 
-      this.emit.apply(this, [service, ...params, callback]) // eslint-disable-line
+      this.emit(service, params, callback)
     })
   }
 }
 
-// export default EntryPoint
 module.exports = EntryPoint

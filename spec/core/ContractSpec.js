@@ -6,7 +6,7 @@ const Contract = require('../../src/core/contract')
 const v = require('../../src/validator')
 
 describe('Contract class - Testing constructor', function () {
-  it ('with default param', function () {
+  it('with default param', function () {
     // given
     let contract = new Contract()
 
@@ -17,7 +17,7 @@ describe('Contract class - Testing constructor', function () {
 })
 
 describe('Contract class - Testing isAlreadyRegister method', function () {
-  it ("with service doesn't register", function () {
+  it("with service doesn't register", function () {
     // given
     let contract = new Contract()
 
@@ -27,7 +27,7 @@ describe('Contract class - Testing isAlreadyRegister method', function () {
     // then
     expect(isExists).toBe(false)
   })
-  it ("with register service", function () {
+  it('with register service', function () {
     // given
     let service = 'service'
 
@@ -69,7 +69,7 @@ describe('Contract class - Testing register method', function () {
     expect(thrown).toThrowError(JaspeError, 'service must be not null undefined or empty string')    
   })
   it('with service already register', function () {
-     // given
+    // given
     let contract = new Contract()
 
     // and a service
@@ -125,7 +125,7 @@ describe('Contract class - Testing register method', function () {
 })
 
 describe('Contract class - Testing check method', function () {
-  it ('without the service is register', function () {
+  it('without the service is register', function () {
     // given
     let contract = new Contract()
 
@@ -137,10 +137,8 @@ describe('Contract class - Testing check method', function () {
 
     // when
     return new Promise((resolve, reject) => {
-      contract.check(service)
-      .catch(reject)
-    })
-    .catch(function (err) {
+      contract.check(service).catch(reject)
+    }).catch(function (err) {
       expect(err.message).toBe('service: ' + service + ' is not register')
       expect(err.from).toBe('Contract class - check method')
     })
@@ -201,13 +199,10 @@ describe('Contract class - Testing check method', function () {
 
     // when
     return new Promise((resolve, reject) => {
-      contract.check(service, {username, email})
-      .then(resolve)
-    })
-    .then(function (result) {
+      contract.check(service, {username, email}).then(resolve)
+    }).then(function (result) {
       // then
-      expect(result.length).toBe(2)
-      expect(result).toEqual([username, email])
+      expect(result).toEqual({username, email})
     })
   })
   it('with invalid params', function () {
@@ -266,10 +261,8 @@ describe('Contract class - Testing check method', function () {
 
     // when
     return new Promise((resolve, reject) => {
-      contract.check(service, {username, email})
-      .catch(reject)
-    })
-    .catch(function (contractError) {
+      contract.check(service, {username, email}).catch(reject)
+    }).catch(function (contractError) {
       // then
       expect(contractError instanceof ContractError).toBe(true)
       expect(contractError.code).toBe('ContractError')

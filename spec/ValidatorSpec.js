@@ -3,121 +3,121 @@
 const v = require('../src/validator');
 
 describe('Validator - Testing notNull validator', function () {
-  it ('with null value', function (done) {
+  it('with null value', function (done) {
     // given : a null value
     let value = null;
 
     // when : call notNull validator
     let callbackError = function () {
       v.notNull(value, function (err) {
-        throw err;
-      });
-    };
+        throw err
+      })
+    }
 
     // then
     expect(callbackError).toThrowError('value have to be not null');
     done();
-  });
-  it ('with undefined value', function (done) {
-      // given : a null value
-      let value = undefined;
+  })
+  it('with undefined value', function (done) {
+    // given : a null value
+    let value
 
-      // when : call notNull validator
-      let callbackError = function () {
-        v.notNull(value, function (err) {
-          throw err;
-        });
-      };
+    // when : call notNull validator
+    let callbackError = function () {
+      v.notNull(value, function (err) {
+        throw err
+      });
+    };
 
-      // then
-      expect(callbackError).toThrowError('value have to be not null');
-      done();
-  });
-  it ('with NaN value', function (done) {
-      // given : a null value
-      let value = NaN
+    // then
+    expect(callbackError).toThrowError('value have to be not null')
+    done()
+  })
+  it('with NaN value', function (done) {
+    // given : a null value
+    let value = NaN
 
-      // when : call notNull validator
-      let callbackError = function () {
-        v.notNull(value, function (err) {
-          throw err
-        })
-      }
+    // when : call notNull validator
+    let callbackError = function () {
+      v.notNull(value, function (err) {
+        throw err
+      })
+    }
 
-      // then
-      expect(callbackError).toThrowError('value have to be not null')
+    // then
+    expect(callbackError).toThrowError('value have to be not null')
+    done()
+  })
+  it('with [] value', function (done) {
+    // given : a null value
+    let value = []
+
+    // when : call notNull validator
+    v.notNull(value, function (err) {
+      // then : value is not null
+      expect(err).toBeNull()
       done()
-  });
-  it ('with [] value', function (done) {
-      // given : a null value
-      let value = []
+    })
+  })
+  it('test with {} value', function (done) {
+    // given : a null value
+    let value = {}
 
-      // when : call notNull validator
-      v.notNull(value, function (err) {
-        // then : value is not null
-        expect(err).toBeNull()
-        done()
-      });
-  });
-  it ('test with {} value', function (done) {
-      // given : a null value
-      let value = {}
+    // when : call notNull validator
+    v.notNull(value, function (err) {
+      // then : value is not null
+      expect(err).toBeNull()
+      done()
+    })
+  })
+  it('test with "" value', function (done) {
+    // given : a null value
+    let value = ""
 
-      // when : call notNull validator
-      v.notNull(value, function (err) {
-        // then : value is not null
-        expect(err).toBeNull()
-        done()
-      });
-  });
-  it ('test with "" value', function (done) {
-      // given : a null value
-      let value = "";
+    // when : call notNull validator
+    v.notNull(value, function (err) {
+      // expect : value is not null
+      expect(err).toBeNull()
+      done()
+    })
+  })
+  it("test with '' value", function (done) {
+    // given : a null value
+    let value = ''
 
-      // when : call notNull validator
-      v.notNull(value, function (err) {
-        // expect : value is not null
-        expect(err).toBeNull();
-        done();
-      });
-  });
-  it ("test with '' value", function (done) {
-      // given : a null value
-      let value = '';
+    // when : call notNull validator
+    v.notNull(value, function (err) {
+      // expect : value is not null
+      expect(err).toBeNull()
+      done()
+    })
+  })
+  it('test with false value', function (done) {
+    // given : a null value
+    let value = false
 
-      // when : call notNull validator
-      v.notNull(value, function (err) {
-        // expect : value is not null
-        expect(err).toBeNull();
-        done();
-      });
-  });
-  it ('test with false value', function (done) {
-      // given : a null value
-      let value = false;
+    // when : call notNull validator
+    v.notNull(value, function (err) {
+      // expect : value is not null
+      expect(err).toBeNull()
+      done()
+    })
+  })
+  it('test with 0 value', function (done) {
+    // given : a null value
+    let value = 0
 
-      // when : call notNull validator
-      v.notNull(value, function (err) {
-        // expect : value is not null
-        expect(err).toBeNull();
-        done();
-      });
-  });
-  it ('test with 0 value', function (done) {
-      // given : a null value
-      let value = 0;
-
-      // when : call notNull validator
-      v.notNull(value, function (err) {
-        // expect : value is not null
-        expect(err).toBeNull();
-        done();
-      });
-  });
-});
+    // when : call notNull validator
+    v.notNull(value, function (err) {
+      // expect : value is not null
+      expect(err).toBeNull()
+      done()
+    })
+  })
+})
 
 describe('Validator - Testing isNull validator', function () {
-  it ('with null value', function (done) {
+  it('with null value', function (done) {
     // given : a null value
     let value = null
 
@@ -131,8 +131,8 @@ describe('Validator - Testing isNull validator', function () {
     // then
     expect(callbackError).toThrowError('value have to be null')
     done()
-  });
-});
+  })
+})
 
 describe('Validator - Testing range validator', function () {
   it('with value is not in range', function (done) {
@@ -145,7 +145,7 @@ describe('Validator - Testing range validator', function () {
 
     // when : call range validator
     let callbackError = function () {
-      v.range(value, min, max, function (err) {
+      v.range(value, {min, max}, function (err) {
         throw err
       })
     }
@@ -163,7 +163,7 @@ describe('Validator - Testing range validator', function () {
     let max = 10
 
     // when : call range validator
-    v.range(value, min, max, function (err, result) {
+    v.range(value, {min, max}, function (err, result) {
       // then
       expect(err).toBe(null)
       expect(result).toBe(value)
@@ -178,7 +178,7 @@ describe('Validator - Testing objectId validator', function () {
     let value = '123'
 
     // when : call objectId validator
-    let callbackError = function() {
+    let callbackError = () => {
       v.objectId(value, function (err) {
         throw err
       })
@@ -211,8 +211,8 @@ describe('Validator - Testing min validator', function () {
     let min = 11
 
     // when : call min validator
-    let callbackError = function() {
-      v.min(value, min, function (err) {
+    let callbackError = () => {
+      v.min(value, {min}, function (err) {
         throw err
       })
     }
@@ -229,7 +229,7 @@ describe('Validator - Testing min validator', function () {
     let min = 5
 
     // when : call min validator
-    v.min(value, min, function (err, result) {
+    v.min(value, {min}, function (err, result) {
       // then
       expect(err).toBe(null)
       expect(result).toBe(value)
@@ -247,8 +247,8 @@ describe('Validator - Testing max validator', function () {
     let max = 10
 
     // when : call max validator
-    let callbackError = function() {
-      v.max(value, max, function (err) {
+    let callbackError = () => {
+      v.max(value, {max}, function (err) {
         throw err
       })
     }
@@ -265,7 +265,7 @@ describe('Validator - Testing max validator', function () {
     let max = 20
 
     // when : call max validator
-    v.max(value, max, function (err, result) {
+    v.max(value, {max}, function (err, result) {
       // then
       expect(err).toBe(null)
       expect(result).toBe(value)
@@ -309,7 +309,7 @@ describe('Validator - Testing isInteger validator', function () {
     // given 
     let value = 10
 
-     // when : call isInteger validator
+    // when : call isInteger validator
     v.isInteger(value, function (err, result) {
       // then
       expect(err).toBe(null)
@@ -354,7 +354,7 @@ describe('Validator - Testing isArray validator', function () {
     // given 
     let value = []
 
-     // when : call isInteger validator
+    // when : call isInteger validator
     v.isArray(value, function (err, result) {
       // then
       expect(err).toBe(null)
