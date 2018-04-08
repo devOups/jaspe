@@ -2,12 +2,12 @@
 
 
 # Jaspe
+V2.0.0
+
 Framework for NodeJs to design software component with contract paradigm
 
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/devOups/jaspe)
 [![Codecov](https://img.shields.io/codecov/c/github/codecov/example-python.svg)](https://codecov.io/gh/devOups/jaspe/branch/master)
-
-[Public Discord](https://discord.gg/n2hkjgq)
 
 ## Installation
 ```bash
